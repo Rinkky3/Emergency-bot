@@ -10,7 +10,7 @@ const ms = require("ms"); // npm install ms -s
 bot.on('ready', () => {
     console.log('Bot is running') // Runs when the bot is launched
     
-    const botchat = bot.channels.get("539225642626056209")
+    const botchat = message.guild.channels.find(`name`, "logs");
     botchat.send(`May the higher powers be with you..`)
     
     bot.user.setActivity("prefix ` | Watching Over You")
