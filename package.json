@@ -1,5 +1,5 @@
 {
-  "name": "chaos-spirit",
+  "name": "order-spirit",
   "version": "1.0.0",
   "description": "<!DOCTYPE html>\r <html>\r <head>\r </head>\r <body>",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RinkkVIPKiller/Chaos-Spirit.git"
+    "url": "git+https://github.com/RinkkVIPKiller/Order-Spirit.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RinkkVIPKiller/Chaos-Spirit/issues"
+    "url": "https://github.com/RinkkVIPKiller/Order-Spirit/issues"
   },
-  "homepage": "https://github.com/RinkkVIPKiller/Chaos-Spirit#readme",
+  "homepage": "https://github.com/RinkkVIPKiller/Order-Spirit#readme",
   "dependencies": {
     "discord.js": "^11.4.2",
     "fs": "0.0.1-security",
