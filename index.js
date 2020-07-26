@@ -159,7 +159,10 @@ bot.on('message', async message => {
 
 
     // Bulk delete messages
-    Xnum = Number
+    let Xnum = parseInt(numberofmessages);
+
+    //message.channel.fetchMessages({ limit: Xnum })
+    //.then(messages => message.channel.bulkDelete(messages));
 
     if (msg.split(" ")[0] === prefix + "del " + Xnum) {
       
@@ -271,7 +274,7 @@ bot.on('message', async message => {
           .addField("Mail", rreason)
           .addField("Sent At", message.createdAt)
           
-          msg.delete()
+          message.delete()
           logchannel.send(mailEmbed)
           message.guild.members.get(sender.id)
           .createDM()
