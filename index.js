@@ -310,6 +310,8 @@ bot.on("messageDelete", (messageDelete) => {
 
 bot.on("messageUpdate", (messageUpdate) => {
 
+  if (bot.user.id === messageUpdate.author.id) {return};
+
   let editEmbed = new Discord.RichEmbed()
   .setTitle("**Edited message**")
   .setColor("#fc3c3c")
