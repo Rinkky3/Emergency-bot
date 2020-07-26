@@ -246,7 +246,8 @@ bot.on('message', async message => {
               });
     
           return;
-      };
+      }
+    };
 
       //
       //USER commands
@@ -286,8 +287,7 @@ bot.on('message', async message => {
                     }
                   }})
                 })
-      }
-    };
+      };
 
 }); //the end of bot.on ------------------------------
 
