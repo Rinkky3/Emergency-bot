@@ -140,29 +140,7 @@ bot.on('message', async message => {
     };
     
     
-    // eval
-    if (msg.startsWith(prefix + "eval")) {
-      if(sender.id !== "186487324517859328") return;
-      const args = message.content.split(" ").slice(1);
-      try {
-        const code = args.join(" ");
-        let evaled = eval(code);
-  
-        if (typeof evaled !== "string")
-          evaled = require("util").inspect(evaled);
-  
-        message.channel.send(clean(evaled), {code:"xl"});
-      } catch (err) {
-        message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
-      }
-    }
-
-
     // Bulk delete messages
-
-    //message.channel.fetchMessages({ limit: Xnum })
-    //.then(messages => message.channel.bulkDelete(messages));
-
     if (msg.split(" ")[0] === prefix + "del") {
       
       let args = msg.split(" ").slice(1);
@@ -250,6 +228,26 @@ bot.on('message', async message => {
           return;
       }
     };
+    
+    
+    // eval
+    if (msg.startsWith(prefix + "eval")) {
+      if(sender.id !== "186487324517859328") return;
+      const args = message.content.split(" ").slice(1);
+      try {
+        const code = args.join(" ");
+        let evaled = eval(code);
+  
+        if (typeof evaled !== "string")
+          evaled = require("util").inspect(evaled);
+  
+        message.channel.send(clean(evaled), {code:"xl"});
+      } catch (err) {
+        message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+      }
+    }
+
+
 
       //
       //USER commands
@@ -297,7 +295,7 @@ bot.on("messageDelete", (messageDelete) => {
 
   let DeleteEmbed = new Discord.RichEmbed()
   .setTitle("**Deleted Message**")
-  .setColor("#fc3c3c")
+  .setColor("#ffcc00")
   .addField("Author", messageDelete.author.tag, true)
   .addField("Channel", messageDelete.channel, true)
   .addField("Message", messageDelete.content)
@@ -313,7 +311,7 @@ bot.on("messageUpdate", (messageUpdate) => {
 
   let editEmbed = new Discord.RichEmbed()
   .setTitle("**Edited message**")
-  .setColor("#fc3c3c")
+  .setColor("#ffcc00")
   .addField("Author", messageUpdate.author.tag, true)
   .addField("Channel", messageUpdate.channel, true)
   .addField("Old Message", messageUpdate.content)
