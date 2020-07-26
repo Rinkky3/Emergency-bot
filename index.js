@@ -8,7 +8,7 @@ const profanities = require('./banned words.json') // for this to work run "npm 
 
 
 // Listener Event: Bot Launched
-bot.on(x => x.name === 'ready', () => {
+bot.on('ready', () => {
     console.log('Bot is running') // Runs when the bot is launched
     
     const botchat = bot.channels.find(x => x.name === "logs")
@@ -31,7 +31,7 @@ bot.on('guildMemberAdd', member => {
 }); */
 
 // Event listener: Message Received ( This will run every time a message is received)
-bot.on(x => x.name === 'message', async message => {
+bot.on('message', async message => {
 
     // Variables
     let prefix = '`'
@@ -291,7 +291,7 @@ bot.on(x => x.name === 'message', async message => {
 
 }); //the end of bot.on ------------------------------
 
-bot.on(x => x.name === "messageDelete", (messageDelete) => {
+bot.on("messageDelete", (messageDelete) => {
 
   let DeleteEmbed = new Discord.RichEmbed()
   .setTitle("**Deleted Message**")
@@ -306,7 +306,7 @@ bot.on(x => x.name === "messageDelete", (messageDelete) => {
   logchan.send(DeleteEmbed);
 });
 
-bot.on(x => x.name === "messageEdit", (messageEdit) => {
+bot.on("messageEdit", (messageEdit) => {
 
   let editEmbed = new Discord.RichEmbed()
   .setTitle("**Edited message**")
