@@ -104,7 +104,6 @@ bot.on('message', async message => {
       //ex: `inrole Admin
       let args = msg.split(" ").slice(1);
       let role = message.mentions.roles.first();
-      let rmembers = message.guild.roles.get(role.id).members.map(m => m.user.tag);
 
       if(!role) {return await(message.reply("No role specified."))};
 
@@ -120,7 +119,6 @@ bot.on('message', async message => {
       //ex `member @Rinkky
       let args = msg.split(" ").slice(1);
       let rMember = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-      let micon = rMember.displayAvatarURL;
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
 
@@ -129,7 +127,7 @@ bot.on('message', async message => {
           let memberembed = new Discord.RichEmbed()
           .setDescription("__**Member Information**__")
           .setColor(0x15f153)
-          .setThumbnail(micon)
+          .setThumbnail(rMember.displayAvatarURL)
           .addField("Name/Nickname", rMember + '/' + nick)
           .addField("ID", rMember.id)
           .addField("Joined at", rMember.joinedAt)
