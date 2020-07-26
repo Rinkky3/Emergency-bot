@@ -159,7 +159,7 @@ bot.on('message', async message => {
 
 
     // Bulk delete messages
-    let Xnum = parseInt(numberofmessages);
+    let Xnum = parseInt();
 
     //message.channel.fetchMessages({ limit: Xnum })
     //.then(messages => message.channel.bulkDelete(messages));
