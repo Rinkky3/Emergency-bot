@@ -293,7 +293,7 @@ bot.on('message', async message => {
       };
 
 }); //the end of bot.on ------------------------------
-
+/*
 bot.on("messageDelete", (messageDelete) => {
 
   let DeleteEmbed = new Discord.RichEmbed()
@@ -306,7 +306,7 @@ bot.on("messageDelete", (messageDelete) => {
 
   let logchan = messageDelete.guild.channels.find(x => x.name === "logs");
   logchan.send(DeleteEmbed);
-});
+});*/
 
 bot.on("messageUpdate", (messageUpdate) => {
 
