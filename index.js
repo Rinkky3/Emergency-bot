@@ -37,7 +37,7 @@ bot.on('message', async message => {
     let prefix = '`'
     let msg = message.content.toLowerCase();
     let sender = message.author;
-    let nick = sender.username
+    let nick = sender.username;
     let Staff = message.guild.roles.find(x => x.name === "Guide");
     if (bot.user.id === sender.id) {return};
 
@@ -168,7 +168,7 @@ bot.on('message', async message => {
       
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         for(i=0; i < Xnum; i++){
-        message.delete()
+        message.delete(message)
         }
       } else {return}
       
@@ -293,7 +293,7 @@ bot.on('message', async message => {
       };
 
 }); //the end of bot.on ------------------------------
-/*
+
 bot.on("messageDelete", (messageDelete) => {
 
   let DeleteEmbed = new Discord.RichEmbed()
@@ -306,7 +306,7 @@ bot.on("messageDelete", (messageDelete) => {
 
   let logchan = messageDelete.guild.channels.find(x => x.name === "logs");
   logchan.send(DeleteEmbed);
-});*/
+});
 
 bot.on("messageUpdate", (messageUpdate) => {
 
@@ -317,7 +317,7 @@ bot.on("messageUpdate", (messageUpdate) => {
   .setColor("#fc3c3c")
   .addField("Author", messageUpdate.author.tag, true)
   .addField("Channel", messageUpdate.channel, true)
-  .addField("Message", messageUpdate.content)
+  .addField("Old Message", messageUpdate.content)
   .setFooter(`Message ID: ${messageUpdate.id} | Author ID: ${messageUpdate.author.id}`);
 
   let logchan = messageUpdate.guild.channels.find(x => x.name === "logs");
