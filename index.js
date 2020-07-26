@@ -90,7 +90,7 @@ bot.on('message', async message => {
           .addField("Server Name", message.guild.name)
           .addField("Created On", message.guild.createdAt)
           .addField("Total Members", message.guild.memberCount)
-          .addField("Emoji", message.guild.emojis)
+          .addField("Total roles:", message.member.roles)
   
           await message.channel.send(serverembed)
   
@@ -107,7 +107,7 @@ bot.on('message', async message => {
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         
-        await(message.channel.send("```" + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```"))
+        await(message.channel.send("```" + `Member count is: ${message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).size} \n` + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```"))
       } else {return}
     };
 
@@ -131,9 +131,9 @@ bot.on('message', async message => {
           .addField("Name/Nickname", rMember + '/' + nick)
           .addField("ID", rMember.id)
           .addField("Joined at", rMember.joinedAt)
-          .addField("Account age:", rMember.createdAt)
+          .addField("Account age:", rMember.user.createdAt)
   
-          await message.channel.send(memberembed)
+        await message.channel.send(memberembed)
 
       } else {return}
     };
@@ -158,9 +158,19 @@ bot.on('message', async message => {
 
 
     // Bulk delete messages
-
+    if (msg.split(" ")[0] === prefix + "del " + Xnum) {
+      Xnum = Number
+      for(i=0; i < Xnum; i++){
+      message.delete()
+      }
+    }
 
     // log deleted messages
+    if(message.delete() || message.edit()) {
+      logchannel.send(msg)
+    }
+
+    // profanity filter
 
 
     //
