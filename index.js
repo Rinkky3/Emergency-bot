@@ -22,7 +22,7 @@ bot.on('ready', () => {
 // event listener: new guild members
 bot.on('guildMemberAdd', member => {
     // Send the message to a designated channel on a server:
-    const channel = member.guild.channels.find('name', 'general');
+    const channel = member.guild.channels.find(x => x.name === 'general');
     // Do nothing if the channel wasn't found on this server
     if (!channel) return;
     // Send the message, mentioning the member
@@ -38,7 +38,7 @@ bot.on('message', async message => {
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let nick = sender.username
-    let Staff = message.guild.roles.find('name', "Guide");
+    let Staff = message.guild.roles.find(x => x.name === "Guide");
     if (bot.user.id === sender.id) {return};
 
 
@@ -196,7 +196,7 @@ bot.on('message', async message => {
               .catch(console.error);
 
               let tomute =  message.guild.members.get(sender.id)
-              let muterole = message.guild.roles.find(`name`, "muted" || `name`, "Muted");
+              let muterole = message.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
                 
                 //start of create role
                 if(!muterole){
