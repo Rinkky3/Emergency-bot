@@ -253,7 +253,7 @@ bot.on('message', async message => {
 
     // admin mails
     if (msg.split(" ")[0] === prefix + "adminmail") {
-      //ex `adminmail @Rinkky racist
+      //ex `adminmail @Rinkky 'mail'
       let args = msg.split(" ").slice(1);
       let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
       let rreason = args.join(" ").slice(22);

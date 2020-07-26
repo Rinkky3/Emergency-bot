@@ -21,9 +21,6 @@
     "fs": "0.0.1-security",
     "moment": "^2.27.0",
     "ms": "^2.1.2",
-    "opusscript": "0.0.6",
-    "profanities": "^2.13.0",
-    "simple-youtube-api": "^5.1.1",
-    "ytdl-core": "^0.29.1"
+    "profanities": "^2.13.0"
   }
 }
