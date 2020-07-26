@@ -106,6 +106,8 @@ bot.on('message', async message => {
       let role = message.mentions.roles.first();
       let rmembers = message.guild.roles.get(role.id).members.map(m => m.user.tag);
 
+      if(!role) {return await(message.reply("No role specified."))};
+
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         
         await(message.channel.send("```" + `Member count is: ${message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).size} \n` + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```"))
@@ -122,8 +124,7 @@ bot.on('message', async message => {
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
 
-        if(!rMember) 
-          return message.reply("No user Specified")
+        if(!rMember) {return await(message.reply("No user Specified"))};
 
           let memberembed = new Discord.RichEmbed()
           .setDescription("__**Member Information**__")
@@ -142,10 +143,10 @@ bot.on('message', async message => {
 
     // Bulk delete messages
     if (msg.split(" ")[0] === prefix + "del") {
-      
       let args = msg.split(" ").slice(1);
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
+        if(!args[0]) {await(message.channel.send("Please specify how many messages should be deleted."))};
         message.channel.bulkDelete(args[0])
       } else {return}
       
