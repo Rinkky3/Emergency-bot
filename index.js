@@ -4,6 +4,7 @@ const bot = new Discord.Client();
 const fs = require('fs');
 const moment = require('moment'); // the moment package. to make this work u need to run "npm install moment --save 
 const ms = require("ms"); // npm install ms -s
+const profanities = require('profanities') // for this to work run "npm install profanities"
 
 
 // Listener Event: Bot Launched
@@ -158,20 +159,93 @@ bot.on('message', async message => {
 
 
     // Bulk delete messages
-    if (msg.split(" ")[0] === prefix + "del " + Xnum) {
-      Xnum = Number
-      for(i=0; i < Xnum; i++){
-      message.delete()
-      }
-    }
+    Xnum = Number
 
-    // log deleted messages
-    if(message.delete() || message.edit()) {
-      logchannel.send(msg)
-    }
+    if (msg.split(" ")[0] === prefix + "del " + Xnum) {
+      
+      if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
+        for(i=0; i < Xnum; i++){
+        message.delete()
+        }
+      } else {return}
+      
+    };
+
 
     // profanity filter
+    let basement = message.guild.channels.find(x => x.name === "basement-directions")
 
+    if (msg.includes(profanities[x])) {
+        if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
+        if(message.guild.channels.id() === basement) {return}
+       
+        let violationEmbed = {embed: {
+          color: 0xff0000,
+          title: "Violation Detected",
+          description: '**Message sent by **' + sender + '** deleted in **<#' + message.channel.id + "> \n" + `"*${msg}*"`,
+          timestamp: new Date(),
+          footer: {
+            icon_url: sender.avatarURL,
+            text: `Username: ${nick} | ID: ${sender.id}`
+          }
+        }}
+
+        await message.delete()
+            .then(logchannel.send(violationEmbed))
+            .catch(console.error);
+
+            let tomute =  message.guild.members.get(sender.id)
+            let muterole = message.guild.roles.find(`name`, "muted" || `name`, "Muted");
+              
+              //start of create role
+              if(!muterole){
+                try{
+                  muterole = await message.guild.createRole({
+                    name: "muted",
+                    color: "#505050",
+                    permissions:[]
+                  })
+                  message.guild.channels.forEach(async (channel, id) => {
+                    await channel.overwritePermissions(muterole, {
+                      SEND_MESSAGES: false,
+                      ADD_REACTIONS: false
+                    })
+                  })
+                }catch(e){
+                  console.log(e.stack);
+                }
+              }
+              //end of create role
+              
+            await(tomute.addRole(muterole.id));
+            setTimeout(function(){
+              tomute.removeRole(muterole.id);
+            },(6000))
+
+            await(message.reply("**You violated rule 10.**")
+            .then(msg => {
+              msg.delete(25000)
+            }))
+              
+
+            message.guild.members.get(sender.id)
+            .createDM()
+            .then(dm => {
+              dm.send({embed: {
+                color: 0xff0000,
+                title: "Server Rule 10 Violated",
+                description: `You have violated our rules.\n  **Latest Violation:** "${msg}" 
+                \nWe do not take violations kindly.`,
+                timestamp: new Date(),
+                footer: {
+                icon_url: "186487324517859328".avatarURL,
+                text: "Warning!"
+                }
+              }}).catch(error)
+            });
+  
+        return;
+    };
 
     //
     //USER commands
@@ -215,6 +289,34 @@ bot.on('message', async message => {
 
 }); //the end of bot.on ------------------------------
 
+bot.on("messageDelete", (messageDelete) => {
+
+  let DeleteEmbed = new Discord.RichEmbed()
+  .setTitle("**Deleted Message**")
+  .setColor("#fc3c3c")
+  .addField("Author", messageDelete.author.tag, true)
+  .addField("Channel", messageDelete.channel, true)
+  .addField("Message", messageDelete.content)
+  .addField("")
+  .setFooter(`Message ID: ${messageDelete.id} | Author ID: ${messageDelete.author.id}`);
+
+  let logchan = messageDelete.guild.channels.find(x => x.name === "logs");
+  logchan.send(DeleteEmbed);
+});
+
+bot.on("messageEdit", (messageEdit) => {
+
+  let editEmbed = new Discord.RichEmbed()
+  .setTitle("**Edited message**")
+  .setColor("#fc3c3c")
+  .addField("Author", messageEdit.author.tag, true)
+  .addField("Channel", messageEdit.channel, true)
+  .addField("Message", messageEdit.content)
+  .setFooter(`Message ID: ${messageEdit.id} | Author ID: ${messageEdit.author.id}`);
+
+  let logchan = messageEdit.guild.channels.find(x => x.name === "logs");
+  logchan.send(editEmbed);
+});
 
 function clean(text) {
   if (typeof(text) === "string")
