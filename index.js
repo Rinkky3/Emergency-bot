@@ -11,7 +11,7 @@ const profanities = require('./banned words.json') // for this to work run "npm 
 bot.on(x => x.name === 'ready', () => {
     console.log('Bot is running') // Runs when the bot is launched
     
-    const botchat = bot.channels.find(`name`, "logs")
+    const botchat = bot.channels.find(x => x.name === "logs")
     botchat.send(`May the higher powers be with you..`)
     
     bot.user.setActivity("prefix ` | Watching Over You")
@@ -173,7 +173,7 @@ bot.on(x => x.name === 'message', async message => {
 
 
     // profanity filter
-    let basement = message.guild.channels.find(c => c.name === "basement-directions")
+    let basement = message.guild.channels.find(x => x.name === "basement-directions")
   
     for (x=0; x<profanities.length; x++) {
       if (msg.includes(profanities[x])) {
@@ -258,7 +258,7 @@ bot.on(x => x.name === 'message', async message => {
         let args = msg.split(" ").slice(1);
         let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
         let rreason = args.join(" ").slice(22);
-        let logchannel = message.guild.channels.find(`name`, "logs");
+        let logchannel = message.guild.channels.find(x => x.name === "logs");
 
           if(!rreason) return message.reply("You can't send an empty paper.");
 
