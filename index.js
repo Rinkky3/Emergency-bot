@@ -299,24 +299,23 @@ bot.on("messageDelete", (messageDelete) => {
   .addField("Author", messageDelete.author.tag, true)
   .addField("Channel", messageDelete.channel, true)
   .addField("Message", messageDelete.content)
-  .addField("")
   .setFooter(`Message ID: ${messageDelete.id} | Author ID: ${messageDelete.author.id}`);
 
   let logchan = messageDelete.guild.channels.find(x => x.name === "logs");
   logchan.send(DeleteEmbed);
 });
 
-bot.on("messageEdit", (messageEdit) => {
+bot.on("messageUpdate", (messageUpdate) => {
 
   let editEmbed = new Discord.RichEmbed()
   .setTitle("**Edited message**")
   .setColor("#fc3c3c")
-  .addField("Author", messageEdit.author.tag, true)
-  .addField("Channel", messageEdit.channel, true)
-  .addField("Message", messageEdit.content)
-  .setFooter(`Message ID: ${messageEdit.id} | Author ID: ${messageEdit.author.id}`);
+  .addField("Author", messageUpdate.author.tag, true)
+  .addField("Channel", messageUpdate.channel, true)
+  .addField("Message", messageUpdate.content)
+  .setFooter(`Message ID: ${messageUpdate.id} | Author ID: ${messageUpdate.author.id}`);
 
-  let logchan = messageEdit.guild.channels.find(x => x.name === "logs");
+  let logchan = messageUpdate.guild.channels.find(x => x.name === "logs");
   logchan.send(editEmbed);
 });
 
