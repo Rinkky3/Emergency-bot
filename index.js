@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 const fs = require('fs');
 const moment = require('moment'); // the moment package. to make this work u need to run "npm install moment --save 
 const ms = require("ms"); // npm install ms -s
-const profanities = require('profanities') // for this to work run "npm install profanities"
+const profanities = require('./banned words.json') // for this to work run "npm install profanities", for real profanity muting.
 
 
 // Listener Event: Bot Launched
@@ -173,118 +173,120 @@ bot.on('message', async message => {
 
 
     // profanity filter
-    let basement = message.guild.channels.find(x => x.name === "basement-directions")
-
-    if (msg.includes(profanities[x])) {
-        if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
-        if(message.guild.channels.id() === basement) {return}
-       
-        let violationEmbed = {embed: {
-          color: 0xff0000,
-          title: "Violation Detected",
-          description: '**Message sent by **' + sender + '** deleted in **<#' + message.channel.id + "> \n" + `"*${msg}*"`,
-          timestamp: new Date(),
-          footer: {
-            icon_url: sender.avatarURL,
-            text: `Username: ${nick} | ID: ${sender.id}`
-          }
-        }}
-
-        await message.delete()
-            .then(logchannel.send(violationEmbed))
-            .catch(console.error);
-
-            let tomute =  message.guild.members.get(sender.id)
-            let muterole = message.guild.roles.find(`name`, "muted" || `name`, "Muted");
-              
-              //start of create role
-              if(!muterole){
-                try{
-                  muterole = await message.guild.createRole({
-                    name: "muted",
-                    color: "#505050",
-                    permissions:[]
-                  })
-                  message.guild.channels.forEach(async (channel, id) => {
-                    await channel.overwritePermissions(muterole, {
-                      SEND_MESSAGES: false,
-                      ADD_REACTIONS: false
-                    })
-                  })
-                }catch(e){
-                  console.log(e.stack);
-                }
-              }
-              //end of create role
-              
-            await(tomute.addRole(muterole.id));
-            setTimeout(function(){
-              tomute.removeRole(muterole.id);
-            },(6000))
-
-            await(message.reply("**You violated rule 10.**")
-            .then(msg => {
-              msg.delete(25000)
-            }))
-              
-
-            message.guild.members.get(sender.id)
-            .createDM()
-            .then(dm => {
-              dm.send({embed: {
-                color: 0xff0000,
-                title: "Server Rule 10 Violated",
-                description: `You have violated our rules.\n  **Latest Violation:** "${msg}" 
-                \nWe do not take violations kindly.`,
-                timestamp: new Date(),
-                footer: {
-                icon_url: "186487324517859328".avatarURL,
-                text: "Warning!"
-                }
-              }}).catch(error)
-            });
+    let basement = message.guild.channels.find(c => c.name === "basement-directions")
   
-        return;
-    };
-
-    //
-    //USER commands
-    //
-
-    // admin mails
-    if (msg.split(" ")[0] === prefix + "adminmail") {
-      //ex `adminmail @Rinkky 'mail'
-      let args = msg.split(" ").slice(1);
-      let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-      let rreason = args.join(" ").slice(22);
-      let logchannel = message.guild.channels.find(`name`, "logs");
-
-        if(!rreason) return message.reply("You can't send an empty paper.");
-
-        let mailEmbed = new Discord.RichEmbed()
-        .setDescription("Today's Mail")
-        .setColor(0xe0782b)
-        .addField("Sent by:", `${sender} with ID: ${sender.id}`)
-        .addField("Recipient:", rUser)
-        .addField("Mail", rreason)
-        .addField("Sent At", message.createdAt)
+    for (x=0; x<profanities.length; x++) {
+      if (msg.includes(profanities[x])) {
+          if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
+          if(message.guild.channels.id() === basement) {return}
         
-        msg.delete()
-        logchannel.send(mailEmbed)
-        message.guild.members.get(sender.id)
-        .createDM()
+          let violationEmbed = {embed: {
+            color: 0xff0000,
+            title: "Violation Detected",
+            description: '**Message sent by **' + sender + '** deleted in **<#' + message.channel.id + "> \n" + `"*${msg}*"`,
+            timestamp: new Date(),
+            footer: {
+              icon_url: sender.avatarURL,
+              text: `Username: ${nick} | ID: ${sender.id}`
+            }
+          }}
+
+          await message.delete()
+              .then(logchannel.send(violationEmbed))
+              .catch(console.error);
+
+              let tomute =  message.guild.members.get(sender.id)
+              let muterole = message.guild.roles.find(`name`, "muted" || `name`, "Muted");
+                
+                //start of create role
+                if(!muterole){
+                  try{
+                    muterole = await message.guild.createRole({
+                      name: "muted",
+                      color: "#505050",
+                      permissions:[]
+                    })
+                    message.guild.channels.forEach(async (channel, id) => {
+                      await channel.overwritePermissions(muterole, {
+                        SEND_MESSAGES: false,
+                        ADD_REACTIONS: false
+                      })
+                    })
+                  }catch(e){
+                    console.log(e.stack);
+                  }
+                }
+                //end of create role
+                
+              await(tomute.addRole(muterole.id));
+              setTimeout(function(){
+                tomute.removeRole(muterole.id);
+              },(6000))
+
+              await(message.reply("**You violated rule 10.**")
+              .then(msg => {
+                msg.delete(25000)
+              }))
+                
+
+              message.guild.members.get(sender.id)
+              .createDM()
               .then(dm => {
                 dm.send({embed: {
-                  color: 0x15f153,
-                  title: "Thank you for the mail!" ,
-                 description: `Your mail to ${rUser} was sent!`,
-                 timestamp: new Date(),
+                  color: 0xff0000,
+                  title: "Server Rule 10 Violated",
+                  description: `You have violated our rules.\n  **Latest Violation:** "${msg}" 
+                  \nWe do not take violations kindly.`,
+                  timestamp: new Date(),
                   footer: {
                   icon_url: "186487324517859328".avatarURL,
-                  text: "Any abuse of the mailing system will result to a penalty"
+                  text: "Warning!"
                   }
-                }})
-              })
+                }}).catch(error)
+              });
+    
+          return;
+      };
+
+      //
+      //USER commands
+      //
+
+      // admin mails
+      if (msg.split(" ")[0] === prefix + "adminmail") {
+        //ex `adminmail @Rinkky 'mail'
+        let args = msg.split(" ").slice(1);
+        let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+        let rreason = args.join(" ").slice(22);
+        let logchannel = message.guild.channels.find(`name`, "logs");
+
+          if(!rreason) return message.reply("You can't send an empty paper.");
+
+          let mailEmbed = new Discord.RichEmbed()
+          .setDescription("Today's Mail")
+          .setColor(0xe0782b)
+          .addField("Sent by:", `${sender} with ID: ${sender.id}`)
+          .addField("Recipient:", rUser)
+          .addField("Mail", rreason)
+          .addField("Sent At", message.createdAt)
+          
+          msg.delete()
+          logchannel.send(mailEmbed)
+          message.guild.members.get(sender.id)
+          .createDM()
+                .then(dm => {
+                  dm.send({embed: {
+                    color: 0x15f153,
+                    title: "Thank you for the mail!" ,
+                  description: `Your mail to ${rUser} was sent!`,
+                  timestamp: new Date(),
+                    footer: {
+                    icon_url: "186487324517859328".avatarURL,
+                    text: "Any abuse of the mailing system will result to a penalty"
+                    }
+                  }})
+                })
+      }
     };
 
 }); //the end of bot.on ------------------------------
