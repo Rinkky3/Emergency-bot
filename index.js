@@ -139,7 +139,7 @@ bot.on('message', async message => {
       } else {return}
     };
     
-    
+
     // Bulk delete messages
     if (msg.split(" ")[0] === prefix + "del") {
       
@@ -158,74 +158,75 @@ bot.on('message', async message => {
     for (x=0; x<profanities.length; x++) {
       if (msg.includes(profanities[x])) {
           if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
-          if(message.guild.channels.id() === basement) {return}
+          if(message.guild.channels.id() === !basement) {
         
-          let violationEmbed = {embed: {
-            color: 0xff0000,
-            title: "Violation Detected",
-            description: '**Message sent by **' + sender + '** deleted in **<#' + message.channel.id + "> \n" + `"*${msg}*"`,
-            timestamp: new Date(),
-            footer: {
-              icon_url: sender.avatarURL,
-              text: `Username: ${nick} | ID: ${sender.id}`
-            }
-          }}
+            let violationEmbed = {embed: {
+              color: 0xff0000,
+              title: "Violation Detected",
+              description: '**Message sent by **' + sender + '** deleted in **<#' + message.channel.id + "> \n" + `"*${msg}*"`,
+              timestamp: new Date(),
+              footer: {
+                icon_url: sender.avatarURL,
+                text: `Username: ${nick} | ID: ${sender.id}`
+              }
+            }}
 
-          await message.delete()
-              .then(logchannel.send(violationEmbed))
-              .catch(console.error);
+            await message.delete()
+                .then(logchannel.send(violationEmbed))
+                .catch(console.error);
 
-              let tomute =  message.guild.members.get(sender.id)
-              let muterole = message.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
-                
-                //start of create role
-                if(!muterole){
-                  try{
-                    muterole = await message.guild.createRole({
-                      name: "muted",
-                      color: "#505050",
-                      permissions:[]
-                    })
-                    message.guild.channels.forEach(async (channel, id) => {
-                      await channel.overwritePermissions(muterole, {
-                        SEND_MESSAGES: false,
-                        ADD_REACTIONS: false
+                let tomute =  message.guild.members.get(sender.id)
+                let muterole = message.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
+                  
+                  //start of create role
+                  if(!muterole){
+                    try{
+                      muterole = await message.guild.createRole({
+                        name: "muted",
+                        color: "#505050",
+                        permissions:[]
                       })
-                    })
-                  }catch(e){
-                    console.log(e.stack);
+                      message.guild.channels.forEach(async (channel, id) => {
+                        await channel.overwritePermissions(muterole, {
+                          SEND_MESSAGES: false,
+                          ADD_REACTIONS: false
+                        })
+                      })
+                    }catch(e){
+                      console.log(e.stack);
+                    }
                   }
-                }
-                //end of create role
-                
-              await(tomute.addRole(muterole.id));
-              setTimeout(function(){
-                tomute.removeRole(muterole.id);
-              },(6000))
+                  //end of create role
+                  
+                await(tomute.addRole(muterole.id));
+                setTimeout(function(){
+                  tomute.removeRole(muterole.id);
+                },(6000))
 
-              await(message.reply("**You violated rule 10.**")
-              .then(msg => {
-                msg.delete(25000)
-              }))
-                
+                await(message.reply("**You violated rule 10.**")
+                .then(msg => {
+                  msg.delete(25000)
+                }))
+                  
 
-              message.guild.members.get(sender.id)
-              .createDM()
-              .then(dm => {
-                dm.send({embed: {
-                  color: 0xff0000,
-                  title: "Server Rule 10 Violated",
-                  description: `You have violated our rules.\n  **Latest Violation:** "${msg}" 
-                  \nWe do not take violations kindly.`,
-                  timestamp: new Date(),
-                  footer: {
-                  icon_url: "186487324517859328".avatarURL,
-                  text: "Warning!"
-                  }
-                }}).catch(error)
-              });
-    
-          return;
+                message.guild.members.get(sender.id)
+                .createDM()
+                .then(dm => {
+                  dm.send({embed: {
+                    color: 0xff0000,
+                    title: "Server Rule 10 Violated",
+                    description: `You have violated our rules.\n  **Latest Violation:** "${msg}" 
+                    \nWe do not take violations kindly.`,
+                    timestamp: new Date(),
+                    footer: {
+                    icon_url: "186487324517859328".avatarURL,
+                    text: "Warning!"
+                    }
+                  }}).catch(error)
+                });
+      
+            return;
+          } else {return}
       }
     };
     
