@@ -159,15 +159,16 @@ bot.on('message', async message => {
 
 
     // Bulk delete messages
-    let Xnum = parseInt(0);
 
     //message.channel.fetchMessages({ limit: Xnum })
     //.then(messages => message.channel.bulkDelete(messages));
 
-    if (msg.split(" ")[0] === prefix + "del" + Xnum) {
+    if (msg.split(" ")[0] === prefix + "del") {
       
+      let args = msg.split(" ").slice(1);
+
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
-        message.channel.bulkDelete(Xnum)
+        message.channel.bulkDelete(args[0])
       } else {return}
       
     };
