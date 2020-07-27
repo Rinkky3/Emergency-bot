@@ -162,7 +162,7 @@ bot.on('message', async message => {
 
           if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
           if(message.guild.channels.id !== basement) {
-            if(!regex.test(msg + " ")){return};
+            if(regex.test(msg) === false){return};
         
             let violationEmbed = {embed: {
               color: 0xff0000,
@@ -323,7 +323,6 @@ bot.on("messageDelete", (messageDelete) => {
 bot.on("messageUpdate", (messageUpdate) => {
 
   if (bot.user.id === messageUpdate.author.id) return;
-  if (oldMessage.content === newMessage.content) return;
 
   let editEmbed = new Discord.RichEmbed()
   .setTitle("**Edited message**")
