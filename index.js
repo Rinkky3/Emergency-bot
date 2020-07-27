@@ -157,6 +157,10 @@ bot.on('message', async message => {
   
     for (x=0; x<profanities.length; x++) {
       if (msg.includes(profanities[x])) {
+
+        let regex = new RegExp(`\W${profanities[x]}\W`, "gi")
+          if(regex.test(msg) === false ) return;
+
           if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
           if(message.guild.channels.id !== basement) {
         
