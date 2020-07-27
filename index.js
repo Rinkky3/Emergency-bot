@@ -335,7 +335,7 @@ bot.on("messageDelete", (messageDelete) => {
   logchan.send(DeleteEmbed).catch(err => console.log(err));
 });
 
-bot.on("messageUpdate", (oldMessage, newMessage) => {
+bot.on("messageUpdate", (messageUpdate) => {
 
   if (bot.user.id === messageUpdate.author.id) return;
   if (oldMessage.content === newMessage.content) return;
@@ -345,8 +345,7 @@ bot.on("messageUpdate", (oldMessage, newMessage) => {
   .setColor("#ffcc00")
   .addField("Author", messageUpdate.author.tag, true)
   .addField("Channel", messageUpdate.channel, true)
-  .addField("Old Message", oldMessage.content)
-  .addField("New Message", newMessage.content)
+  .addField("Old Message", messageUpdate.content)
   .setFooter(`Message ID: ${messageUpdate.id} | Author ID: ${messageUpdate.author.id}`);
 
   let logchan = messageUpdate.guild.channels.find(x => x.name === "logs");
