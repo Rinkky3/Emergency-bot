@@ -162,7 +162,7 @@ bot.on('message', async message => {
 
           if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
           if(message.guild.channels.id !== basement) {
-            if(regex.test(msg + " ") = false){return};
+            if(!regex.test(msg + " ")){return};
         
             let violationEmbed = {embed: {
               color: 0xff0000,
