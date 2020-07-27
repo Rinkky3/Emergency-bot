@@ -157,7 +157,7 @@ bot.on('message', async message => {
   
     for (x=0; x<profanities.length; x++) {
       if (msg.includes(profanities[x])) {
-          if(bot.user.id === sender.id || "186487324517859328" === sender.id || message.author.roles.has(x => x.name, "Guide")) {return}
+          if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
           if(message.guild.channels.id !== basement) {
         
             let violationEmbed = {embed: {
