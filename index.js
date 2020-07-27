@@ -159,10 +159,10 @@ bot.on('message', async message => {
       if (msg.includes(badwords[x])) {
 
         let regex = new RegExp(`(?:\W)?${badwords[x]}\W`, "gi")
-          if(regex.test(msg + " ")){
 
           if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
           if(message.guild.channels.id !== basement) {
+            if(regex.test(msg + " ") === true ){
         
             let violationEmbed = {embed: {
               color: 0xff0000,
@@ -181,26 +181,6 @@ bot.on('message', async message => {
 
                 let tomute =  message.guild.members.get(sender.id)
                 let muterole = message.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
-                  
-                  //start of create role
-                  if(!muterole){
-                    try{
-                      muterole = await message.guild.createRole({
-                        name: "muted",
-                        color: "#505050",
-                        permissions:[]
-                      })
-                      message.guild.channels.forEach(async (channel, id) => {
-                        await channel.overwritePermissions(muterole, {
-                          SEND_MESSAGES: false,
-                          ADD_REACTIONS: false
-                        })
-                      })
-                    }catch(e){
-                      console.log(e.stack);
-                    }
-                  }
-                  //end of create role
                   
                 await(tomute.addRole(muterole.id));
                 setTimeout(function(){
@@ -230,8 +210,8 @@ bot.on('message', async message => {
                 });
       
             return;
-          } else {return}
-      }}
+          }} else {return}
+      }
     };
     
     
