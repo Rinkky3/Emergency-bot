@@ -156,13 +156,13 @@ bot.on('message', async message => {
     let basement = message.guild.channels.find(x => x.name === "basement-directions")
   
     for (x=0; x<badwords.length; x++) {
-      if (msg.includes(badwords[x])) {
+      let regex = new RegExp(`(?:\W)?${badwords[x]}\W`, "gi")
 
-        let regex = new RegExp(`(?:\W)?${badwords[x]}\W`, "gi")
+      if (msg.includes(badwords[x])) {
 
           if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
           if(message.guild.channels.id !== basement) {
-            if(regex.test(msg + " ") === true ){
+            if(regex.test(msg + " ") = true){
         
             let violationEmbed = {embed: {
               color: 0xff0000,
@@ -316,6 +316,7 @@ bot.on("messageDelete", (messageDelete) => {
   .setFooter(`Message ID: ${messageDelete.id} | Author ID: ${messageDelete.author.id}`);
   
   let logchan = messageDelete.guild.channels.find(x => x.name === "logs");
+  if (messageDelete.length >= 1024) {logchan.send("deleted message embed cannot be sent, for it exceeds 1024 characters.")}
   logchan.send(DeleteEmbed).catch(err => console.log(err));
 });
 
@@ -333,6 +334,7 @@ bot.on("messageUpdate", (messageUpdate) => {
   .setFooter(`Message ID: ${messageUpdate.id} | Author ID: ${messageUpdate.author.id}`);
 
   let logchan = messageUpdate.guild.channels.find(x => x.name === "logs");
+  if (messageUpdate.length >= 1024) {logchan.send("Updated message embed cannot be sent, for it exceeds 1024 characters.")}
   logchan.send(editEmbed).catch(err => console.log(err));
 });
 
