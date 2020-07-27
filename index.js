@@ -157,7 +157,7 @@ bot.on('message', async message => {
   
     for (x=0; x<profanities.length; x++) {
       if (msg.includes(profanities[x])) {
-          if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
+          if(bot.user.id === sender.id || "186487324517859328" === sender.id || message.author.roles.has(x => x.name, "Guide")) {return}
           if(message.guild.channels.id !== basement) {
         
             let violationEmbed = {embed: {
@@ -173,7 +173,7 @@ bot.on('message', async message => {
 
             await message.delete()
                 .then(logchannel.send(violationEmbed))
-                .catch(console.error);
+                .catch(err => console.log(err));
 
                 let tomute =  message.guild.members.get(sender.id)
                 let muterole = message.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
@@ -206,7 +206,7 @@ bot.on('message', async message => {
                 await(message.reply("**You violated rule 10.**")
                 .then(msg => {
                   msg.delete(25000)
-                }))
+                })).catch(err => console.log(err))
                   
 
                 message.guild.members.get(sender.id)
@@ -222,7 +222,7 @@ bot.on('message', async message => {
                     icon_url: "186487324517859328".avatarURL,
                     text: "Warning!"
                     }
-                  }}).catch(error)
+                  }}).catch(err => console.log(err))
                 });
       
             return;
@@ -279,6 +279,7 @@ bot.on('message', async message => {
           if(!rUser) {
             message.delete()
             logchannel.send(mailEmbedA)
+            .catch(err => console.log(err))
 
             message.guild.members.get(sender.id)
           .createDM()
@@ -293,7 +294,7 @@ bot.on('message', async message => {
                     text: "Any abuse of the mailing system will result to a penalty"
                     }
                   }})
-                })
+                }).catch(err => console.log(err))
 
             return;
           }
@@ -315,7 +316,7 @@ bot.on('message', async message => {
                     text: "Any abuse of the mailing system will result to a penalty"
                     }
                   }})
-                })
+                }).catch(err => console.log(err))
       };
 
 }); //the end of bot.on ------------------------------
@@ -329,25 +330,27 @@ bot.on("messageDelete", (messageDelete) => {
   .addField("Channel", messageDelete.channel, true)
   .addField("Message", messageDelete.content)
   .setFooter(`Message ID: ${messageDelete.id} | Author ID: ${messageDelete.author.id}`);
-
+  
   let logchan = messageDelete.guild.channels.find(x => x.name === "logs");
-  logchan.send(DeleteEmbed);
+  logchan.send(DeleteEmbed).catch(err => console.log(err));
 });
 
-bot.on("messageUpdate", (messageUpdate) => {
+bot.on("messageUpdate", (oldMessage, newMessage) => {
 
-  if (bot.user.id === messageUpdate.author.id) {return};
+  if (bot.user.id === messageUpdate.author.id) return;
+  if (oldMessage.content === newMessage.content) return;
 
   let editEmbed = new Discord.RichEmbed()
   .setTitle("**Edited message**")
   .setColor("#ffcc00")
   .addField("Author", messageUpdate.author.tag, true)
   .addField("Channel", messageUpdate.channel, true)
-  .addField("Old Message", messageUpdate.content)
+  .addField("Old Message", oldMessage.content)
+  .addField("New Message", newMessage.content)
   .setFooter(`Message ID: ${messageUpdate.id} | Author ID: ${messageUpdate.author.id}`);
 
   let logchan = messageUpdate.guild.channels.find(x => x.name === "logs");
-  logchan.send(editEmbed);
+  logchan.send(editEmbed).catch(err => console.log(err));
 });
 
 function clean(text) {
