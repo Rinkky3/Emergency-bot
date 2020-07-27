@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 const fs = require('fs');
 const moment = require('moment'); // the moment package. to make this work u need to run "npm install moment --save 
 const ms = require("ms"); // npm install ms -s
-const profanities = require('./banned words.json') // for this to work run "npm install profanities", for real profanity muting.
+const badwords = require('./banned words.json') // for a list of curse words, run "npm install profanities" and require('profanities').
 
 
 // Listener Event: Bot Launched
@@ -155,11 +155,11 @@ bot.on('message', async message => {
     // profanity filter
     let basement = message.guild.channels.find(x => x.name === "basement-directions")
   
-    for (x=0; x<profanities.length; x++) {
-      if (msg.includes(profanities[x])) {
+    for (x=0; x<badwords.length; x++) {
+      if (msg.includes(badwords[x])) {
 
-        let regex = new RegExp(`\W${profanities[x]}\W`, "gi")
-          if(regex.test(msg) === false ) return;
+        let regex = new RegExp(`(?:\W)?${badwords[x]}\W`, "gi")
+          if(regex.test(msg + " ")){
 
           if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
           if(message.guild.channels.id !== basement) {
@@ -231,7 +231,7 @@ bot.on('message', async message => {
       
             return;
           } else {return}
-      }
+      }}
     };
     
     
