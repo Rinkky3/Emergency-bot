@@ -182,7 +182,7 @@ bot.on('message', async message => {
                 await(tomute.addRole(muterole.id));
                 setTimeout(function(){
                   tomute.removeRole(muterole.id);
-                },(6000))
+                },(86400000))
 
                 await(message.reply("**You violated rule 10.**")
                 .then(msg => {
@@ -334,21 +334,20 @@ bot.on("messageUpdate", (messageUpdate, newMessage) => {
   if (messageUpdate.length >= 1024) {logchan.send("Updated message embed cannot be sent, for it exceeds 1024 characters.")}
   logchan.send(editEmbed).catch(err => console.log(err));
 
-  /*
   //checking for newmessage having badwords
-  let basement = message.guild.channels.find(x => x.name === "basement-directions")
+  let basement = newMessage.guild.channels.find(x => x.name === "basement-directions")
   let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
   for (x=0; x<badwords.length; x++) {
 
     if(!violregex.test(" " + msg + " ")) continue;
 
         if(bot.user.id === sender.id || "186487324517859328" === sender.id) return;
-        if(message.guild.channels.id !== basement) {
+        if(newMessage.guild.channels.id !== basement) {
       
           let violationEmbed = {embed: {
             color: 0xff0000,
             title: "Violation Detected",
-            description: '**Message sent by **' + sender + '** deleted in **<#' + message.channel.id + "> \n" + `"*${msg}*"`,
+            description: '**Message sent by **' + sender + '** deleted in **<#' + newMessage.channel.id + "> \n" + `"*${msg}*"`,
             timestamp: new Date(),
             footer: {
               icon_url: sender.avatarURL,
@@ -356,25 +355,25 @@ bot.on("messageUpdate", (messageUpdate, newMessage) => {
             }
           }}
 
-          await message.delete()
+          await newMessage.delete()
               .then(logchannel.send(violationEmbed))
               .catch(err => console.log(err));
 
-              let tomute =  message.guild.members.get(sender.id)
-              let muterole = message.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
+              let tomute =  newMessage.guild.members.get(sender.id)
+              let muterole = newMessage.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
                 
               await(tomute.addRole(muterole.id));
               setTimeout(function(){
                 tomute.removeRole(muterole.id);
-              },(6000))
+              },(86400000))
 
-              await(message.reply("**You violated rule 10.**")
+              await(newMessage.reply("**You violated rule 10.**")
               .then(msg => {
                 msg.delete(25000)
               })).catch(err => console.log(err))
                 
 
-              message.guild.members.get(sender.id)
+              newMessage.guild.members.get(sender.id)
               .createDM()
               .then(dm => {
                 dm.send({embed: {
@@ -392,7 +391,7 @@ bot.on("messageUpdate", (messageUpdate, newMessage) => {
     
           return;
         } else return;
-  };*/
+  };
 
 });
 
