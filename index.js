@@ -6,7 +6,6 @@ const moment = require('moment'); // the moment package. to make this work u nee
 const ms = require("ms"); // npm install ms -s
 const badwords = require('./banned words.json') // for a list of curse words, run "npm install profanities" and require('profanities').
 
-const basement = message.guild.channels.find(x => x.name === "basement-directions")
 let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
 
 // Listener Event: Bot Launched
@@ -155,6 +154,7 @@ bot.on('message', async message => {
 
 
     // profanity filter
+    let basement = message.guild.channels.find(x => x.name === "basement-directions")
     for (x=0; x<badwords.length; x++) {
 
       if(!violregex.test(" " + msg + " ")) continue;
@@ -336,6 +336,8 @@ bot.on("messageUpdate", (messageUpdate, newMessage) => {
   logchan.send(editEmbed).catch(err => console.log(err));
 
   /*
+  //checking for newmessage having badwords
+  let basement = message.guild.channels.find(x => x.name === "basement-directions")
   for (x=0; x<badwords.length; x++) {
 
     if(!violregex.test(" " + msg + " ")) continue;
