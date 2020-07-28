@@ -158,7 +158,7 @@ bot.on('message', async message => {
       let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
       if(!violregex.test(" " + msg + " ")) continue;
 
-          if(bot.user.id === sender.id || "186487324517859328" === sender.id /*|| message.member.roles.has(Staff.id)*/) return;
+          if(bot.user.id === sender.id || "186487324517859328" === sender.id || message.member.roles.has(Staff.id)) return;
           if(message.guild.channels.id !== basement) {
         
             let violationEmbed = {embed: {
@@ -347,7 +347,7 @@ bot.on("messageUpdate", async (oldMessage, newMessage) => {
 
     if(!violregex.test(" " + msg + " ")) continue;
 
-        if(bot.user.id === sender.id || "186487324517859328" === sender.id /*|| message.member.roles.has(Staff.id)*/) return;
+        if(bot.user.id === sender.id || "186487324517859328" === sender.id || newMessage.member.roles.has(Staff.id)) return;
         if(newMessage.guild.channels.id !== basement) {
       
           let violationEmbed = {embed: {
