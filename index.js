@@ -336,13 +336,13 @@ bot.on("messageUpdate", async (oldMessage, newMessage) => {
 
   //checking for newmessage having badwords
   let basement = newMessage.guild.channels.find(x => x.name === "basement-directions")
-  let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
   let msg = newMessage.content.toLowerCase();
   let sender = newMessage.author;
   let nick = sender.username;
   let Staff = newMessage.guild.roles.find(x => x.name === "Guide");
   let logchannel = newMessage.guild.channels.find(x => x.name === "logs");
   for (x=0; x<badwords.length; x++) {
+    let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
     if (bot.user.id === sender.id) {return};
 
     if(!violregex.test(" " + msg + " ")) continue;
