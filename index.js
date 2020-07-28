@@ -303,6 +303,8 @@ bot.on('message', async message => {
 
 bot.on("messageDelete", (messageDelete) => {
 
+  if (bot.user.id === messageDelete.author.id) return;
+
   let DeleteEmbed = new Discord.RichEmbed()
   .setTitle("**Deleted Message**")
   .setColor("#ffcc00")
