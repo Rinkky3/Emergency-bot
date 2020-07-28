@@ -158,11 +158,10 @@ bot.on('message', async message => {
     for (x=0; x<badwords.length; x++) {
       let regex = new RegExp(`(?:\W)?${badwords[x]}\W`, "gi")
 
-      if (msg.includes(badwords[x])) {
+      if(!regex.test(msg + " ")) return;
 
-          if(bot.user.id === sender.id || "186487324517859328" === sender.id) {return}
+          if(bot.user.id === sender.id || "186487324517859328" === sender.id) return;
           if(message.guild.channels.id !== basement) {
-            if(regex.test(msg) === false){return};
         
             let violationEmbed = {embed: {
               color: 0xff0000,
@@ -210,8 +209,7 @@ bot.on('message', async message => {
                 });
       
             return;
-          } else {return}
-      }
+          } else return;
     };
     
     
