@@ -156,9 +156,9 @@ bot.on('message', async message => {
     let basement = message.guild.channels.find(x => x.name === "basement-directions")
   
     for (x=0; x<badwords.length; x++) {
-      let regex = new RegExp(`(?:\W)?${badwords[x]}\W`, "gi")
+      let regex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
 
-      if(!regex.test(msg + " ")) {console.log(regex)}
+      if(!regex.test(msg + " ")) {return}
 
           if(bot.user.id === sender.id || "186487324517859328" === sender.id) return;
           if(message.guild.channels.id !== basement) {
