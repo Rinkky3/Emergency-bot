@@ -6,6 +6,8 @@ const moment = require('moment'); // the moment package. to make this work u nee
 const ms = require("ms"); // npm install ms -s
 const badwords = require('./banned words.json') // for a list of curse words, run "npm install profanities" and require('profanities').
 
+const basement = message.guild.channels.find(x => x.name === "basement-directions")
+let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
 
 // Listener Event: Bot Launched
 bot.on('ready', () => {
@@ -153,12 +155,9 @@ bot.on('message', async message => {
 
 
     // profanity filter
-    let basement = message.guild.channels.find(x => x.name === "basement-directions")
-  
     for (x=0; x<badwords.length; x++) {
-      let regex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
 
-      if(!regex.test(msg + " ")) continue;
+      if(!violregex.test(" " + msg + " ")) continue;
 
           if(bot.user.id === sender.id || "186487324517859328" === sender.id) return;
           if(message.guild.channels.id !== basement) {
@@ -318,9 +317,10 @@ bot.on("messageDelete", (messageDelete) => {
   logchan.send(DeleteEmbed).catch(err => console.log(err));
 });
 
-bot.on("messageUpdate", (messageUpdate) => {
+bot.on("messageUpdate", (messageUpdate, newMessage) => {
 
   if (bot.user.id === messageUpdate.author.id) return;
+  if (messageUpdate === newMessage) return;
 
   let editEmbed = new Discord.RichEmbed()
   .setTitle("**Edited message**")
@@ -328,11 +328,70 @@ bot.on("messageUpdate", (messageUpdate) => {
   .addField("Author", messageUpdate.author.tag, true)
   .addField("Channel", messageUpdate.channel, true)
   .addField("Old Message", messageUpdate.content)
+  .addField("New message:", newMessage.content)
   .setFooter(`Message ID: ${messageUpdate.id} | Author ID: ${messageUpdate.author.id}`);
 
   let logchan = messageUpdate.guild.channels.find(x => x.name === "logs");
   if (messageUpdate.length >= 1024) {logchan.send("Updated message embed cannot be sent, for it exceeds 1024 characters.")}
   logchan.send(editEmbed).catch(err => console.log(err));
+
+  /*
+  for (x=0; x<badwords.length; x++) {
+
+    if(!violregex.test(" " + msg + " ")) continue;
+
+        if(bot.user.id === sender.id || "186487324517859328" === sender.id) return;
+        if(message.guild.channels.id !== basement) {
+      
+          let violationEmbed = {embed: {
+            color: 0xff0000,
+            title: "Violation Detected",
+            description: '**Message sent by **' + sender + '** deleted in **<#' + message.channel.id + "> \n" + `"*${msg}*"`,
+            timestamp: new Date(),
+            footer: {
+              icon_url: sender.avatarURL,
+              text: `Username: ${nick} | ID: ${sender.id}`
+            }
+          }}
+
+          await message.delete()
+              .then(logchannel.send(violationEmbed))
+              .catch(err => console.log(err));
+
+              let tomute =  message.guild.members.get(sender.id)
+              let muterole = message.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
+                
+              await(tomute.addRole(muterole.id));
+              setTimeout(function(){
+                tomute.removeRole(muterole.id);
+              },(6000))
+
+              await(message.reply("**You violated rule 10.**")
+              .then(msg => {
+                msg.delete(25000)
+              })).catch(err => console.log(err))
+                
+
+              message.guild.members.get(sender.id)
+              .createDM()
+              .then(dm => {
+                dm.send({embed: {
+                  color: 0xff0000,
+                  title: "Server Rule 10 Violated",
+                  description: `You have violated our rules.\n  **Latest Violation:** "${msg}" 
+                  \nWe do not take violations kindly.`,
+                  timestamp: new Date(),
+                  footer: {
+                  icon_url: "186487324517859328".avatarURL,
+                  text: "Warning!"
+                  }
+                }}).catch(err => console.log(err))
+              });
+    
+          return;
+        } else return;
+  };*/
+
 });
 
 function clean(text) {
