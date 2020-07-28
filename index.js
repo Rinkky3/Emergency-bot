@@ -7,7 +7,7 @@ const ms = require("ms"); // npm install ms -s
 const badwords = require('./banned words.json') // for a list of curse words, run "npm install profanities" and require('profanities').
 
 // Listener Event: Bot Launched
-bot.on('ready', () => {
+bot.on('ready', async () => {
     console.log('Bot is running') // Runs when the bot is launched
     
     const botchat = bot.channels.find(x => x.name === "logs")
@@ -316,7 +316,7 @@ bot.on("messageDelete", (messageDelete) => {
   logchan.send(DeleteEmbed).catch(err => console.log(err));
 });
 
-bot.on("messageUpdate", (messageUpdate, newMessage) => {
+bot.on("messageUpdate", async (messageUpdate, newMessage) => {
 
   if (bot.user.id === messageUpdate.author.id) return;
   if (messageUpdate === newMessage) return;
