@@ -316,33 +316,33 @@ bot.on("messageDelete", (messageDelete) => {
   logchan.send(DeleteEmbed).catch(err => console.log(err));
 });
 
-bot.on("messageUpdate", async (messageUpdate, newMessage) => {
+bot.on("messageUpdate", async (oldMessage, newMessage) => {
 
-  if (bot.user.id === messageUpdate.author.id) return;
-  if (messageUpdate === newMessage) return;
+  if (bot.user.id === oldMessage.author.id) return;
+  if (oldMessage === newMessage) return;
 
   let editEmbed = new Discord.RichEmbed()
   .setTitle("**Edited message**")
   .setColor("#ffcc00")
-  .addField("Author", messageUpdate.author.tag, true)
-  .addField("Channel", messageUpdate.channel, true)
-  .addField("Old Message", messageUpdate.content)
+  .addField("Author", oldMessage.author.tag, true)
+  .addField("Channel", oldMessage.channel, true)
+  .addField("Old Message", oldMessage.content)
   .addField("New message:", newMessage.content)
-  .setFooter(`Message ID: ${messageUpdate.id} | Author ID: ${messageUpdate.author.id}`);
+  .setFooter(`Message ID: ${oldMessage.id} | Author ID: ${oldMessage.author.id}`);
 
-  let logchan = messageUpdate.guild.channels.find(x => x.name === "logs");
-  if (messageUpdate.length >= 1024) {logchan.send("Updated message embed cannot be sent, for it exceeds 1024 characters.")}
+  let logchan = oldMessage.guild.channels.find(x => x.name === "logs");
+  if (oldMessage.length >= 1024) {logchan.send("Updated message embed cannot be sent, for it exceeds 1024 characters.")}
   logchan.send(editEmbed).catch(err => console.log(err));
 
   //checking for newmessage having badwords
   let basement = newMessage.guild.channels.find(x => x.name === "basement-directions")
   let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
+  let msg = newMessage.content.toLowerCase();
+  let sender = newMessage.author;
+  let nick = sender.username;
+  let Staff = newMessage.guild.roles.find(x => x.name === "Guide");
+  let logchannel = newMessage.guild.channels.find(x => x.name === "logs");
   for (x=0; x<badwords.length; x++) {
-    let msg = newMessage.content.toLowerCase();
-    let sender = newMessage.author;
-    let nick = sender.username;
-    let Staff = newMessage.guild.roles.find(x => x.name === "Guide");
-    let logchannel = newMessage.guild.channels.find(x => x.name === "logs");
     if (bot.user.id === sender.id) {return};
 
     if(!violregex.test(" " + msg + " ")) continue;
