@@ -158,7 +158,7 @@ bot.on('message', async message => {
       let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
       if(!violregex.test(" " + msg + " ")) continue;
 
-          if(bot.user.id === sender.id || "186487324517859328" === sender.id) return;
+          if(bot.user.id === sender.id || "186487324517859328" === sender.id /*|| message.member.roles.has(Staff.id)*/) return;
           if(message.guild.channels.id !== basement) {
         
             let violationEmbed = {embed: {
@@ -338,10 +338,16 @@ bot.on("messageUpdate", async (messageUpdate, newMessage) => {
   let basement = newMessage.guild.channels.find(x => x.name === "basement-directions")
   let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
   for (x=0; x<badwords.length; x++) {
+    let msg = message.content.toLowerCase();
+    let sender = message.author;
+    let nick = sender.username;
+    let Staff = message.guild.roles.find(x => x.name === "Guide");
+    let logchannel = newMessage.guild.channels.find(x => x.name === "logs");
+    if (bot.user.id === sender.id) {return};
 
     if(!violregex.test(" " + msg + " ")) continue;
 
-        if(bot.user.id === sender.id || "186487324517859328" === sender.id) return;
+        if(bot.user.id === sender.id || "186487324517859328" === sender.id /*|| message.member.roles.has(Staff.id)*/) return;
         if(newMessage.guild.channels.id !== basement) {
       
           let violationEmbed = {embed: {
