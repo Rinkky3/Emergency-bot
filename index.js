@@ -36,8 +36,8 @@ bot.on('guildMemberAdd', member => {
                           -play [link / name] (works with youtube, and spotify)`,
             timestamp: new Date(),
             footer: {
-              icon_url: "663648603021246466".avatarURL,
-              text: "May you find what you are looking for."
+              icon_url: bot.avatarURL,
+              text: "May you find what you are looking for"
               }
           }}).catch(err => console.log(err))
         });
