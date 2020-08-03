@@ -328,6 +328,7 @@ bot.on('message', async message => {
 bot.on("messageDelete", (messageDelete) => {
 
   if (bot.user.id === messageDelete.author.id) return;
+  if (messageDelete.content === Image) return;
 
   let DeleteEmbed = new Discord.RichEmbed()
   .setTitle("**Deleted Message**")
