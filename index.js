@@ -29,11 +29,10 @@ bot.on('guildMemberAdd', member => {
           dm.send({embed: {
             color: 0x00e600,
             title: "Welcome to Tranquility!",
-            description: `We are a server that welcomes those who wish to better themselves and find their own path. \n
+            description: `We are a server that welcomes those who wish to better themselves and find their own path.
                           Please read our Rules and Regulations. The server handbook is where you can find information about the channels, and quickly navigate everywhere. \n
-                          \n
                           The current available commands for everyone are:
-                          \`adminmail [admin of choice] [mail contents] (to send a message to the admin)\n
+                          \`adminmail [admin of choice] [mail contents] (to send a message to the admin)
                           -play [link / name] (works with youtube, and spotify)`,
             timestamp: new Date(),
             footer: {
