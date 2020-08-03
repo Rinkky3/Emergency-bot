@@ -17,17 +17,39 @@ bot.on('ready', async () => {
 
 });
 
-/*
+
 // event listener: new guild members
 bot.on('guildMemberAdd', member => {
-    // Send the message to a designated channel on a server:
-    const channel = member.guild.channels.find(x => x.name === 'general');
-    // Do nothing if the channel wasn't found on this server
-    if (!channel) return;
-    // Send the message, mentioning the member
-    channel.send(`The omens foretold your arrival, ${member}. We welcome you.`);
+  const botchat = bot.channels.find(x => x.name === "logs")
+  botchat.send(`${member} joined.`)
+
+  member.guild.members.get(member)
+    .createDM()
+      .then(dm => {
+          dm.send({embed: {
+            color: 0x00e600,
+            title: "Welcome to Tranquility!",
+            description: `We are a server that welcomes those who wish to better themselves and find their own path. \n
+                          Please read our Rules and Regulations. The server handbook is where you can find information about the channels, and quickly navigate everywhere. \n
+                          \n
+                          The current available commands for everyone are:
+                          \`adminmail [admin of choice] [mail contents] (to send a message to the admin)\n
+                          -play [link / name] (works with youtube, and spotify)`,
+            timestamp: new Date(),
+            footer: {
+              icon_url: "663648603021246466".avatarURL,
+              text: "May you find what you are looking for."
+              }
+          }}).catch(err => console.log(err))
+        });
     
-}); */
+});
+
+// event listener: member remove
+bot.on('guildMemberRemove', member => {
+  const botchat = bot.channels.find(x => x.name === "logs")
+    botchat.send(`${member} left.`)
+}); 
 
 // Event listener: Message Received ( This will run every time a message is received)
 bot.on('message', async message => {
