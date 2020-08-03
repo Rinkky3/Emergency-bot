@@ -23,7 +23,7 @@ bot.on('guildMemberAdd', member => {
   const botchat = bot.channels.find(x => x.name === "logs")
   botchat.send(`${member} joined.`)
 
-  member.guild.members.get(member)
+  member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
           dm.send({embed: {
