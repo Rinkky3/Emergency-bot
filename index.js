@@ -4,7 +4,8 @@ const bot = new Discord.Client();
 const fs = require('fs');
 const moment = require('moment'); // the moment package. to make this work u need to run "npm install moment --save 
 const ms = require("ms"); // npm install ms -s
-const badwords = require('./banned words.json') // for a list of curse words, run "npm install profanities" and require('profanities').
+const badwords = require('./banned words.json'); // for a list of curse words, run "npm install profanities" and require('profanities').
+const { type } = require('os');
 
 // Listener Event: Bot Launched
 bot.on('ready', async () => {
@@ -13,13 +14,15 @@ bot.on('ready', async () => {
     const botchat = bot.channels.find(x => x.name === "logs")
     botchat.send(`May the higher powers be with you..`)
     
-    bot.user.setActivity("prefix ` | Watching Over You")
+    bot.user.setActivity("Over You | prefix `" , {
+      type: "WATCHING"
+    })
 
 });
 
 
 // event listener: new guild members
-bot.on('guildMemberAdd', member => {
+bot.on('guildMemberAdd', async member => {
   const botchat = bot.channels.find(x => x.name === "logs")
   botchat.send(`${member} joined.`)
 
@@ -45,7 +48,7 @@ bot.on('guildMemberAdd', member => {
 });
 
 // event listener: member remove
-bot.on('guildMemberRemove', member => {
+bot.on('guildMemberRemove', async member => {
   const botchat = bot.channels.find(x => x.name === "logs")
     botchat.send(`${member} left.`)
 }); 
@@ -58,7 +61,7 @@ bot.on('message', async message => {
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let nick = sender.username;
-    let Staff = message.guild.roles.find(x => x.name === "Guide").catch(err => console.log(err));
+    let Staff = message.guild.roles.find(x => x.name === "Guide");
     let logchannel = message.guild.channels.find(x => x.name === "logs");
     if (bot.user.id === sender.id) {return};
 
