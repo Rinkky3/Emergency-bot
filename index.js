@@ -6,6 +6,8 @@ const moment = require('moment'); // the moment package. to make this work u nee
 const ms = require("ms"); // npm install ms -s
 const badwords = require('./banned words.json'); // for a list of curse words, run "npm install profanities" and require('profanities').
 const { type } = require('os');
+const { strict } = require('assert');
+const { isString } = require('util');
 
 // Listener Event: Bot Launched
 bot.on('ready', async () => {
@@ -328,7 +330,7 @@ bot.on('message', async message => {
 bot.on("messageDelete", (messageDelete) => {
 
   if (bot.user.id === messageDelete.author.id) return;
-  if (messageDelete.content === Image) return;
+  if (messageDelete.content !== isString) return;
 
   let DeleteEmbed = new Discord.RichEmbed()
   .setTitle("**Deleted Message**")
