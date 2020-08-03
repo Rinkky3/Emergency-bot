@@ -58,7 +58,7 @@ bot.on('message', async message => {
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let nick = sender.username;
-    let Staff = message.guild.roles.find(x => x.name === "Guide");
+    let Staff = message.guild.roles.find(x => x.name === "Guide").catch(err => console.log(err));
     let logchannel = message.guild.channels.find(x => x.name === "logs");
     if (bot.user.id === sender.id) {return};
 
