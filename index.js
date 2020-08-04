@@ -330,7 +330,7 @@ bot.on('message', async message => {
 bot.on("messageDelete", (messageDelete) => {
 
   if (bot.user.id === messageDelete.author.id) return;
-  if (messageDelete.content !== isString) return;
+  //if (messageDelete.content !== isString) return;
 
   let DeleteEmbed = new Discord.RichEmbed()
   .setTitle("**Deleted Message**")
@@ -349,7 +349,7 @@ bot.on("messageUpdate", async (oldMessage, newMessage) => {
 
   if (bot.user.id === oldMessage.author.id) return;
   if (oldMessage === newMessage) return;
-  if (oldMessage.content !== isString) return;
+  //if (oldMessage.content !== isString) return;
 
   let editEmbed = new Discord.RichEmbed()
   .setTitle("**Edited message**")
