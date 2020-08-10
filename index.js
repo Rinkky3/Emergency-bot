@@ -154,7 +154,7 @@ bot.on('message', async message => {
           .setDescription("__**Member Information**__")
           .setColor(0x15f153)
           .setThumbnail(rMember.displayAvatarURL)
-          .addField("Name/Nickname", rMember + '/' + nick)
+          .addField("Name/Nickname", rMember + '/' + rMember.nickname)
           .addField("ID", rMember.id)
           .addField("Joined at", rMember.joinedAt)
           .addField("Account age:", rMember.user.createdAt)
