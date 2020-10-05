@@ -4,7 +4,6 @@ const bot = new Discord.Client();
 const fs = require('fs');
 const moment = require('moment'); // the moment package. to make this work u need to run "npm install moment --save 
 const ms = require("ms"); // npm install ms -s
-const badwords = require('./banned words.json'); // for a list of curse words, run "npm install profanities" and require('profanities').
 const { type } = require('os');
 const { strict } = require('assert');
 const { isString } = require('util');
@@ -14,10 +13,10 @@ bot.on('ready', async () => {
     console.log('Bot is running') // Runs when the bot is launched
     
     const botchat = bot.channels.find(x => x.name === "logs")
-    botchat.send(`May the higher powers be with you..`)
+    botchat.send(`https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
     
-    bot.user.setActivity("Over You | prefix `" , {
-      type: "WATCHING"
+    bot.user.setActivity("Being Sus | prefix `" , {
+      type: "PLAYING"
     })
 
 });
@@ -33,16 +32,12 @@ bot.on('guildMemberAdd', async member => {
       .then(dm => {
           dm.send({embed: {
             color: 0x00e600,
-            title: "Welcome to Tranquility!",
-            description: `We are a server that welcomes those who wish to better themselves and find their own path.
-                          Please read our Rules and Regulations. The server handbook is where you can find information about the channels, and quickly navigate everywhere. \n
-                          The current available commands for everyone are:
-                          \`adminmail [admin of choice] [mail contents] (to send a message to the admin)
-                          -play [link / name] (works with youtube, and spotify)`,
+            title: "Wake the fuck up samurai!",
+            description: `We have a city to burn.`,
             timestamp: new Date(),
             footer: {
               icon_url: bot.avatarURL,
-              text: "May you find what you are looking for"
+              text: "taco, burrito, sombrero"
               }
           }}).catch(err => console.log(err))
         });
@@ -63,7 +58,7 @@ bot.on('message', async message => {
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let nick = sender.username;
-    let Staff = message.guild.roles.find(x => x.name === "Guide");
+    let Staff = message.guild.roles.find(x => x.name === "Guards");
     let logchannel = message.guild.channels.find(x => x.name === "logs");
     if (bot.user.id === sender.id) {return};
 
@@ -177,7 +172,7 @@ bot.on('message', async message => {
     };
 
 
-    // profanity filter
+    /*// profanity filter
     let basement = message.guild.channels.find(x => x.name === "basement-directions")
 
     for (x=0; x<badwords.length; x++) {
@@ -252,7 +247,7 @@ bot.on('message', async message => {
       } catch (err) {
         message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
       }
-    }
+    }*/
 
 
 
