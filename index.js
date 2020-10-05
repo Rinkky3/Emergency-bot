@@ -112,7 +112,7 @@ bot.on('message', async message => {
           .addField("Server Name", message.guild.name)
           .addField("Created On", message.guild.createdAt)
           .addField("Total Members", message.guild.memberCount)
-          .addField("Total roles:", message.member.roles)
+          .addField("Total roles:", message.guild.roles)
   
           await message.channel.send(serverembed)
   
