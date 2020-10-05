@@ -229,7 +229,7 @@ bot.on('message', async message => {
       
             return;
           } else return;
-    };
+    };*/
     
     
     // eval
@@ -247,7 +247,7 @@ bot.on('message', async message => {
       } catch (err) {
         message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
       }
-    }*/
+    }
 
 
 
@@ -276,6 +276,10 @@ bot.on('message', async message => {
           .addField("Sent by:", `${sender} with ID: ${sender.id}`)
           .addField("Mail", args[0])
           .addField("Sent At", message.createdAt)
+
+
+          if(rUser !== message.guild.member()) return message.reply("You can only mention a person.");
+
 
           if(!rUser) {
             message.delete()
