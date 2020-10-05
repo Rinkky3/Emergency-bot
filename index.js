@@ -278,7 +278,7 @@ bot.on('message', async message => {
           .addField("Sent At", message.createdAt)
 
 
-          if(rUser !== message.guild.member()) return message.reply("You can only mention a person.");
+          if(rUser !== message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]))) return message.reply("You can only mention a person.");
 
 
           if(!rUser) {
