@@ -112,7 +112,7 @@ bot.on('message', async message => {
           .addField("Server Name", message.guild.name)
           .addField("Created On", message.guild.createdAt)
           .addField("Total Members", message.guild.memberCount)
-          .addField("Total roles:", message.guild.roles)
+          .addField("Total roles:", message.guild.roles.size)
   
           await message.channel.send(serverembed)
   
@@ -278,7 +278,9 @@ bot.on('message', async message => {
           .addField("Sent At", message.createdAt)
 
 
-          if(rUser !== message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]))) return message.reply("You can only mention a person.");
+          //mentioning a role = return
+          //
+          // need to add
 
 
           if(!rUser) {
@@ -347,6 +349,7 @@ bot.on("messageDelete", (messageDelete) => {
 bot.on("messageUpdate", async (oldMessage, newMessage) => {
 
   if (bot.user.id === oldMessage.author.id) return;
+  if (bot.user.id === newMessage.author.id) return;
   if (oldMessage === newMessage) return;
   //if (oldMessage.content !== isString) return;
 
@@ -363,7 +366,7 @@ bot.on("messageUpdate", async (oldMessage, newMessage) => {
   if (oldMessage.length >= 1024) {logchan.send("Updated message embed cannot be sent, for it exceeds 1024 characters.")}
   logchan.send(editEmbed).catch(err => console.log(err));
 
-  //checking for newmessage having badwords
+  /*//checking for newmessage having badwords
   let basement = newMessage.guild.channels.find(x => x.name === "basement-directions")
   let msg = newMessage.content.toLowerCase();
   let sender = newMessage.author;
@@ -426,7 +429,7 @@ bot.on("messageUpdate", async (oldMessage, newMessage) => {
     
           return;
         } else return;
-  };
+  };*/
 
 });
 
