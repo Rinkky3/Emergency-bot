@@ -96,7 +96,7 @@ bot.on('message', async message => {
         .addField("Bot Name", bot.user.username)
         .addField("Created At", bot.user.createdAt)
 
-        let m = await message.channel.send(botembed)
+        message.channel.send(botembed)
     };
 
 
@@ -114,7 +114,7 @@ bot.on('message', async message => {
           .addField("Total Members", message.guild.memberCount)
           .addField("Total roles:", message.guild.roles.size)
   
-          let m = await message.channel.send(serverembed)
+          message.channel.send(serverembed)
   
         } else {return}
     };
@@ -130,7 +130,7 @@ bot.on('message', async message => {
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         
-        let m = await(message.channel.send("```" + `Member count is: ${message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).size} \n` + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```"))
+        (message.channel.send("```" + `Member count is: ${message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).size} \n` + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```"))
       } else {return}
     };
 
@@ -154,7 +154,7 @@ bot.on('message', async message => {
           .addField("Joined at", rMember.joinedAt)
           .addField("Account age:", rMember.user.createdAt)
   
-          let m = await message.channel.send(memberembed)
+          message.channel.send(memberembed)
 
       } else {return}
     };
@@ -176,13 +176,13 @@ bot.on('message', async message => {
       let args = msg.split(" ").slice(1);
       let newAnnounceMsg = args.join(" ").slice(22);
 
-      if(!newAnnounceMsg) return await message.reply('You really do like forgetting things dont you? Whats the message you want me to say you dumbass?');
+      if(!newAnnounceMsg) return message.reply('You really do like forgetting things dont you? Whats the message you want me to say you dumbass?');
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         const newchat = bot.channels.find(x => x.name === "announcements")
-        let m = await newchat.send(`@everyone \n https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
-        .then(await newchat.send(newAnnounceMsg))
-        .then(await message.reply('Done!'))
+         newchat.send(`@everyone \n https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
+        .then(newchat.send(newAnnounceMsg))
+        .then(message.reply('Done!'))
       } else {return}
       
     };
@@ -241,7 +241,7 @@ bot.on('message', async message => {
 
           if(!rUser) {
             message.delete()
-            let m = await logchannel.send(mailEmbedA)
+             logchannel.send(mailEmbedA)
             .catch(err => console.log(err))
 
             message.guild.members.get(sender.id)
@@ -299,7 +299,7 @@ bot.on("messageDelete", (messageDelete) => {
   
   let logchan = messageDelete.guild.channels.find(x => x.name === "logs");
   if (messageDelete.length >= 1024) {logchan.send("deleted message embed cannot be sent, for it exceeds 1024 characters.")}
-  let m = await logchan.send(DeleteEmbed).catch(err => console.log(err));
+   logchan.send(DeleteEmbed).catch(err => console.log(err));
 });
 
 bot.on("messageUpdate", async (oldMessage, newMessage) => {
@@ -320,8 +320,7 @@ bot.on("messageUpdate", async (oldMessage, newMessage) => {
 
   let logchan = oldMessage.guild.channels.find(x => x.name === "logs");
   if (oldMessage.length >= 1024) {logchan.send("Updated message embed cannot be sent, for it exceeds 1024 characters.")}
-  let m = await logchan.send(editEmbed).catch(err => console.log(err));
-
+   logchan.send(editEmbed).catch(err => console.log(err));
 
 });
 
