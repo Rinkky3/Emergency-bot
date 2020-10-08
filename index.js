@@ -96,7 +96,7 @@ bot.on('message', async message => {
         .addField("Bot Name", bot.user.username)
         .addField("Created At", bot.user.createdAt)
 
-        message.channel.send(botembed)
+        let m = await message.channel.send(botembed)
     };
 
 
@@ -114,7 +114,7 @@ bot.on('message', async message => {
           .addField("Total Members", message.guild.memberCount)
           .addField("Total roles:", message.guild.roles.size)
   
-          await message.channel.send(serverembed)
+          let m = await message.channel.send(serverembed)
   
         } else {return}
     };
@@ -130,7 +130,7 @@ bot.on('message', async message => {
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         
-        await(message.channel.send("```" + `Member count is: ${message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).size} \n` + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```"))
+        let m = await(message.channel.send("```" + `Member count is: ${message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).size} \n` + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```"))
       } else {return}
     };
 
@@ -154,7 +154,7 @@ bot.on('message', async message => {
           .addField("Joined at", rMember.joinedAt)
           .addField("Account age:", rMember.user.createdAt)
   
-        await message.channel.send(memberembed)
+          let m = await message.channel.send(memberembed)
 
       } else {return}
     };
@@ -172,64 +172,20 @@ bot.on('message', async message => {
     };
 
 
-    /*// profanity filter
-    let basement = message.guild.channels.find(x => x.name === "basement-directions")
+    if (msg.split(" ")[0] === prefix + "news") {
+      let args = msg.split(" ").slice(1);
+      let newAnnounceMsg = args.join(" ").slice(22);
 
-    for (x=0; x<badwords.length; x++) {
-      let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
-      if(!violregex.test(" " + msg + " ")) continue;
+      if(!newAnnounceMsg) return await message.reply('You really do like forgetting things dont you? Whats the message you want me to say you dumbass?');
 
-          if(bot.user.id === sender.id || "186487324517859328" === sender.id || message.member.roles.has(Staff.id)) return;
-          if(message.guild.channels.id !== basement) {
-        
-            let violationEmbed = {embed: {
-              color: 0xff0000,
-              title: "Violation Detected",
-              description: '**Message sent by **' + sender + '** deleted in **<#' + message.channel.id + "> \n" + `"*${msg}*"`,
-              timestamp: new Date(),
-              footer: {
-                icon_url: sender.avatarURL,
-                text: `Username: ${nick} | ID: ${sender.id}`
-              }
-            }}
-
-            await message.delete()
-                .then(logchannel.send(violationEmbed))
-                .catch(err => console.log(err));
-
-                let tomute =  message.guild.members.get(sender.id)
-                let muterole = message.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
-                  
-                await(tomute.addRole(muterole.id));
-                setTimeout(function(){
-                  tomute.removeRole(muterole.id);
-                },(86400000))
-
-                await(message.reply("**You violated rule 10.**")
-                .then(msg => {
-                  msg.delete(25000)
-                })).catch(err => console.log(err))
-                  
-
-                message.guild.members.get(sender.id)
-                .createDM()
-                .then(dm => {
-                  dm.send({embed: {
-                    color: 0xff0000,
-                    title: "Server Rule 10 Violated",
-                    description: `You have violated our rules.\n  **Latest Violation:** "${msg}" 
-                    \nWe do not take violations kindly.`,
-                    timestamp: new Date(),
-                    footer: {
-                    icon_url: "186487324517859328".avatarURL,
-                    text: "Warning!"
-                    }
-                  }}).catch(err => console.log(err))
-                });
+      if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
+        const newchat = bot.channels.find(x => x.name === "announcements")
+        let m = await newchat.send(`@everyone \n https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
+        .then(await newchat.send(newAnnounceMsg))
+        .then(await message.reply('Done!'))
+      } else {return}
       
-            return;
-          } else return;
-    };*/
+    };
     
     
     // eval
@@ -259,7 +215,7 @@ bot.on('message', async message => {
       if (msg.split(" ")[0] === prefix + "adminmail") {
         //ex `adminmail @Rinkky 'mail'
         let args = msg.split(" ").slice(1);
-        let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+        let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]) || message.mentions.roles.first());
         let rreason = args.join(" ").slice(22);
 
           let mailEmbed = new Discord.RichEmbed()
@@ -285,7 +241,7 @@ bot.on('message', async message => {
 
           if(!rUser) {
             message.delete()
-            logchannel.send(mailEmbedA)
+            let m = await logchannel.send(mailEmbedA)
             .catch(err => console.log(err))
 
             message.guild.members.get(sender.id)
@@ -309,7 +265,7 @@ bot.on('message', async message => {
           if(!rreason) return message.reply("You can't send an empty paper.");
           
           message.delete()
-          logchannel.send(mailEmbed)
+          let m = await logchannel.send(mailEmbed)
           message.guild.members.get(sender.id)
           .createDM()
                 .then(dm => {
@@ -343,7 +299,7 @@ bot.on("messageDelete", (messageDelete) => {
   
   let logchan = messageDelete.guild.channels.find(x => x.name === "logs");
   if (messageDelete.length >= 1024) {logchan.send("deleted message embed cannot be sent, for it exceeds 1024 characters.")}
-  logchan.send(DeleteEmbed).catch(err => console.log(err));
+  let m = await logchan.send(DeleteEmbed).catch(err => console.log(err));
 });
 
 bot.on("messageUpdate", async (oldMessage, newMessage) => {
@@ -364,72 +320,8 @@ bot.on("messageUpdate", async (oldMessage, newMessage) => {
 
   let logchan = oldMessage.guild.channels.find(x => x.name === "logs");
   if (oldMessage.length >= 1024) {logchan.send("Updated message embed cannot be sent, for it exceeds 1024 characters.")}
-  logchan.send(editEmbed).catch(err => console.log(err));
+  let m = await logchan.send(editEmbed).catch(err => console.log(err));
 
-  /*//checking for newmessage having badwords
-  let basement = newMessage.guild.channels.find(x => x.name === "basement-directions")
-  let msg = newMessage.content.toLowerCase();
-  let sender = newMessage.author;
-  let nick = sender.username;
-  let Staff = newMessage.guild.roles.find(x => x.name === "Guide");
-  let logchannel = newMessage.guild.channels.find(x => x.name === "logs");
-  for (x=0; x<badwords.length; x++) {
-    let violregex = new RegExp(`(?:\\W)?${badwords[x]}\\W`, "gi")
-    if (bot.user.id === sender.id) {return};
-
-    if(!violregex.test(" " + msg + " ")) continue;
-
-        if(bot.user.id === sender.id || "186487324517859328" === sender.id || newMessage.member.roles.has(Staff.id)) return;
-        if(newMessage.guild.channels.id !== basement) {
-      
-          let violationEmbed = {embed: {
-            color: 0xff0000,
-            title: "Violation Detected",
-            description: '**Message sent by **' + sender + '** deleted in **<#' + newMessage.channel.id + "> \n" + `"*${msg}*"`,
-            timestamp: new Date(),
-            footer: {
-              icon_url: sender.avatarURL,
-              text: `Username: ${nick} | ID: ${sender.id}`
-            }
-          }}
-
-          await newMessage.delete()
-              .then(logchannel.send(violationEmbed))
-              .catch(err => console.log(err));
-
-              let tomute =  newMessage.guild.members.get(sender.id)
-              let muterole = newMessage.guild.roles.find(x => x.name === "muted" || x.name === "Muted");
-                
-              await(tomute.addRole(muterole.id));
-              setTimeout(function(){
-                tomute.removeRole(muterole.id);
-              },(86400000))
-
-              await(newMessage.reply("**You violated rule 10.**")
-              .then(msg => {
-                msg.delete(25000)
-              })).catch(err => console.log(err))
-                
-
-              newMessage.guild.members.get(sender.id)
-              .createDM()
-              .then(dm => {
-                dm.send({embed: {
-                  color: 0xff0000,
-                  title: "Server Rule 10 Violated",
-                  description: `You have violated our rules.\n  **Latest Violation:** "${msg}" 
-                  \nWe do not take violations kindly.`,
-                  timestamp: new Date(),
-                  footer: {
-                  icon_url: "186487324517859328".avatarURL,
-                  text: "Warning!"
-                  }
-                }}).catch(err => console.log(err))
-              });
-    
-          return;
-        } else return;
-  };*/
 
 });
 
