@@ -172,17 +172,21 @@ bot.on('message', async message => {
     };
 
 
+    // `news "among us at etc etc etc"
+
     if (msg.split(" ")[0] === prefix + "news") {
       let args = msg.split(" ").slice(1);
-      let newAnnounceMsg = args.join(" ").slice(22);
 
-      if(!newAnnounceMsg) return message.reply('You really do like forgetting things dont you? Whats the message you want me to say you dumbass?');
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
-        const newchat = bot.channels.find(x => x.name === "announcements")
-         newchat.send(`@everyone \n https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
-        .then(newchat.send(newAnnounceMsg))
-        .then(message.reply('Done!'))
+        let newchat = bot.channels.find(x => x.name === "announcements")
+
+        if(!args) return message.reply('You really do like forgetting things dont you? Whats the message you want me to say you dumbass?');
+        
+        newchat.send(`@everyone \n https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
+        .then(newchat.send(args))
+
+        message.reply('Done!')
       } else {return}
       
     };
