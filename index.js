@@ -174,7 +174,7 @@ bot.on('message', async message => {
 
     // `news "among us at etc etc etc"
 
-    if (msg.split(" ")[0] === prefix + "news") {
+    if (msg.startsWith(prefix + "news")) {
       let args = msg.split(" ").slice(1);
 
 
@@ -183,8 +183,8 @@ bot.on('message', async message => {
 
         if(!args[0]) return message.reply('You really do like forgetting things dont you? Whats the message you want me to say you dumbass?').catch(err => console.log(err));
         
-        let m = await newchat.send(`everyone https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
-        let m2 = await newchat.send(message.content)
+        let m = await newchat.send('test'/*`everyone https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`*/)
+        let m2 = await newchat.send(args[1])
 
         .then(message.reply('Done!').catch(err => console.log(err)))
       } else {return}
