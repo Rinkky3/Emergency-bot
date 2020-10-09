@@ -183,8 +183,8 @@ bot.on('message', async message => {
 
         if(!args[0]) return message.reply('You really do like forgetting things dont you? Whats the message you want me to say you dumbass?').catch(err => console.log(err));
         
-        newchat.send(`@everyone \n https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
-        .then(newchat.send(args[0])).catch(err => console.log(err))
+        let m = await awaitnewchat.send(`@everyone \n https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
+        let m2 = await newchat.send(args[0])
 
         message.reply('Done!').catch(err => console.log(err))
       } else {return}
