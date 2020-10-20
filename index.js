@@ -175,7 +175,7 @@ bot.on('message', async message => {
     // `news "among us at etc etc etc"
 
     if (msg.startsWith(prefix + "news")) {
-      let args = msg.slice(4).trim().split(" ")[0];
+      let args = msg.split(" ").slice(1);
       message.reply(args + " test")
 
 
