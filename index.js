@@ -175,17 +175,14 @@ bot.on('message', async message => {
     // `news "among us at etc etc etc"
 
     if (msg.startsWith(prefix + "news")) {
-      let args = msg.split(" ").slice(1);
-      message.reply(args + " test")
+      let args = msg.split("`news ");
 
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
-        let newchat = message.guild.channels.get("760418137606193192")//(x => x.name === "announcements")
-
-        let collector = new Discord.MessageCollector(message.channel, !args[0]);
+        let newchat = message.guild.channels.get("760418137606193192")
         
-        let m = await message.reply('test'/*`everyone https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`*/)
-        let m2 = await message.reply(msg.slice(0).trim())
+        let m = await newchat.send(`@everyone`, {files: ["./storage/Emeeting.png"]})
+        let m2 = await newchat.send(args)
 
         .then(message.reply('Done!').catch(err => console.log(err)))
       } else {return}
