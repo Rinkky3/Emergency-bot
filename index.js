@@ -87,7 +87,7 @@ bot.on('message', async message => {
         message.channel.startTyping(1000)
         let m = await message.channel.send("Pong.");
         m.edit(`Latency: ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`)
-      message.channel.stopTyping(true)
+        let m15 = await message.channel.stopTyping(true)
       } else {return}
     };
     
@@ -113,7 +113,7 @@ bot.on('message', async message => {
         .addField("Created At", bot.user.createdAt)
 
         message.channel.send(botembed)
-        message.channel.stopTyping(true)
+        let m15 = await message.channel.stopTyping(true)
     };
 
 
@@ -133,7 +133,7 @@ bot.on('message', async message => {
           .addField("Total roles:", message.guild.roles.size)
   
           message.channel.send(serverembed)
-          message.channel.stopTyping(true)
+          let m15 = await message.channel.stopTyping(true)
         } else {return}
     };
 
@@ -149,7 +149,7 @@ bot.on('message', async message => {
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         message.channel.startTyping(1000)
         message.channel.send("```" + `Member count is: ${message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).size} \n` + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```")
-      message.channel.stopTyping(true)
+      let m15 = await message.channel.stopTyping(true)
       } else {return}
     };
 
@@ -176,7 +176,7 @@ bot.on('message', async message => {
   
           message.channel.send(memberembed)
 
-      message.channel.stopTyping(true)
+      let m15 = await message.channel.stopTyping(true)
         } else {return}
     };
     
@@ -189,7 +189,7 @@ bot.on('message', async message => {
         message.channel.startTyping(1000)
         if(!args[0]) {await(message.channel.send("Please specify how many messages should be deleted."))};
         message.channel.bulkDelete(args[0])
-      message.channel.stopTyping(true)
+      let m15 = await message.channel.stopTyping(true)
       } else {return}
       
     };
@@ -209,7 +209,7 @@ bot.on('message', async message => {
         let m2 = await newchat.send(args)
 
         .then(message.reply('Done!').catch(err => console.log(err)))
-      message.channel.stopTyping(true)
+      let m15 = await message.channel.stopTyping(true)
       } else {return}
       
     };
