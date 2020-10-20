@@ -1,12 +1,11 @@
 ﻿// Calling the package
+`use strict`;
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fs = require('fs');
 const moment = require('moment'); // the moment package. to make this work u need to run "npm install moment --save 
 const ms = require("ms"); // npm install ms -s
-const { type } = require('os');
-const { strict } = require('assert');
-const { isString } = require('util');
+const { start } = require('repl');
 
 // Listener Event: Bot Launched
 bot.on('ready', async () => {
@@ -20,7 +19,6 @@ bot.on('ready', async () => {
     })
 
 });
-
 
 // event listener: new guild members
 bot.on('guildMemberAdd', async member => {
@@ -50,18 +48,33 @@ bot.on('guildMemberRemove', async member => {
     botchat.send(`${member} left.`)
 }); 
 
+
 // Event listener: Message Received ( This will run every time a message is received)
 bot.on('message', async message => {
 
     // Variables
-    let prefix = '`'
+    let prefix = '`t'
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let nick = sender.username;
-    let Staff = message.guild.roles.find(x => x.name === "Guards");
     let logchannel = message.guild.channels.find(x => x.name === "logs");
     if (bot.user.id === sender.id) {return};
 
+    // DM forward
+
+    /*if (message.channel.type == "dm") {
+
+      let DMembed = new Discord.RichEmbed()
+        .setDescription("DM Message")
+        .setColor(0xe0782b)
+        .setThumbnail(sender.displayAvatarURL)
+        .addField("Username", nick)
+        .addField("Sent at:", message.createdAt)
+
+        message.logchannel.send(DMembed)
+  };*/
+
+  let Staff = message.guild.roles.find(x => x.name === "Guards");
 
 
     //
@@ -71,8 +84,10 @@ bot.on('message', async message => {
     // Ping / Pong command
     if (msg === prefix + 'ping') {
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
+        message.channel.startTyping(1000)
         let m = await message.channel.send("Pong.");
-        m.edit(`Latency: ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`);
+        m.edit(`Latency: ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`)
+      message.channel.stopTyping(true)
       } else {return}
     };
     
@@ -82,13 +97,14 @@ bot.on('message', async message => {
         if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
               let m = await message.react("👍")
               let m2 = await message.react("👎")
-          } else {return};
+            } else {return};
     };
 
 
     // bot info command
     if (msg === prefix + "botinfo") {
 
+      message.channel.startTyping(1000)
         let botembed = new Discord.RichEmbed()
         .setDescription("Bot Information")
         .setColor(0x15f153)
@@ -97,6 +113,7 @@ bot.on('message', async message => {
         .addField("Created At", bot.user.createdAt)
 
         message.channel.send(botembed)
+        message.channel.stopTyping(true)
     };
 
 
@@ -104,6 +121,7 @@ bot.on('message', async message => {
     if (msg === prefix + "serverinfo") {
   
         if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
+          message.channel.startTyping(1000)
           
           let serverembed = new Discord.RichEmbed()
           .setDescription("__**Server Information**__")
@@ -115,7 +133,7 @@ bot.on('message', async message => {
           .addField("Total roles:", message.guild.roles.size)
   
           message.channel.send(serverembed)
-  
+          message.channel.stopTyping(true)
         } else {return}
     };
 
@@ -129,8 +147,9 @@ bot.on('message', async message => {
       if(!role) {return await(message.reply("No role specified."))};
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
-        
-        (message.channel.send("```" + `Member count is: ${message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).size} \n` + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```"))
+        message.channel.startTyping(1000)
+        message.channel.send("```" + `Member count is: ${message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).size} \n` + message.guild.members.filter(m =>!m.user.bot).filter(m => m.roles.get(role.id)).map(m => `\n[${m.user.username} : ${m.user.id}]`) + "```")
+      message.channel.stopTyping(true)
       } else {return}
     };
 
@@ -142,6 +161,7 @@ bot.on('message', async message => {
       let rMember = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
+        message.channel.startTyping(1000)
 
         if(!rMember) {return await(message.reply("No user Specified"))};
 
@@ -156,7 +176,8 @@ bot.on('message', async message => {
   
           message.channel.send(memberembed)
 
-      } else {return}
+      message.channel.stopTyping(true)
+        } else {return}
     };
     
 
@@ -165,8 +186,10 @@ bot.on('message', async message => {
       let args = msg.split(" ").slice(1);
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
+        message.channel.startTyping(1000)
         if(!args[0]) {await(message.channel.send("Please specify how many messages should be deleted."))};
         message.channel.bulkDelete(args[0])
+      message.channel.stopTyping(true)
       } else {return}
       
     };
@@ -179,12 +202,14 @@ bot.on('message', async message => {
 
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
+        message.channel.startTyping(1000)
         let newchat = message.guild.channels.get("760418137606193192")
         
         let m = await newchat.send(`@everyone`, {files: ["./storage/Emeeting.png"]})
         let m2 = await newchat.send(args)
 
         .then(message.reply('Done!').catch(err => console.log(err)))
+      message.channel.stopTyping(true)
       } else {return}
       
     };
