@@ -175,16 +175,16 @@ bot.on('message', async message => {
     // `news "among us at etc etc etc"
 
     if (msg.startsWith(prefix + "news")) {
-      let args = msg.split(" ").slice(1);
+      let args = msg.slice(4).trim().split(" ")[0];
 
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         let newchat = message.guild.channels.get("760418137606193192")//(x => x.name === "announcements")
 
-        if(!args[0]) return message.reply('You really do like forgetting things dont you? Whats the message you want me to say you dumbass?').catch(err => console.log(err));
+        let collector = new Discord.MessageCollector(message.channel, !args[0]);
         
         let m = await newchat.send('test'/*`everyone https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`*/)
-        let m2 = await newchat.send(args[1])
+        let m2 = await newchat.send(msg.slice(4).trim())
 
         .then(message.reply('Done!').catch(err => console.log(err)))
       } else {return}
