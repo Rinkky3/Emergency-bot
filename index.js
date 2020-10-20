@@ -53,7 +53,7 @@ bot.on('guildMemberRemove', async member => {
 bot.on('message', async message => {
 
     // Variables
-    let prefix = '`t'
+    let prefix = '`'
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let nick = sender.username;
