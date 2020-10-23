@@ -198,14 +198,14 @@ bot.on('message', async message => {
     // `news "among us at etc etc etc"
 
     if (msg.startsWith(prefix + "news")) {
-      let args = msg.split("`news ");
+      let args = msg.split(prefix + "news ");
 
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         message.channel.startTyping(500)
         let newchat = message.guild.channels.get("760418137606193192")
         
-        let m = await newchat.send(`@everyone`, {files: ["./storage/Emeeting.png"]})
+        let m = await newchat.send('@everyone', {files: ["./storage/Emeeting.png"]})
         let m2 = await newchat.send(args)
 
         .then(message.reply('Done!').catch(err => console.log(err)))
