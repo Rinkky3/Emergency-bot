@@ -11,7 +11,7 @@ const { start } = require('repl');
 bot.on('ready', async () => {
     console.log('Bot is running') // Runs when the bot is launched
     
-    const botchat = bot.channels.find(x => x.name === "logs")
+    const botchat = bot.channels.get("762666208121061386")
     botchat.send(`https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
     
     bot.user.setActivity("Being Sus | prefix `" , {
@@ -22,7 +22,7 @@ bot.on('ready', async () => {
 
 // event listener: new guild members
 bot.on('guildMemberAdd', async member => {
-  const botchat = bot.channels.find(x => x.name === "logs")
+  const botchat = bot.channels.get("762666208121061386")
   botchat.send(`${member} joined.`)
 
   let bud = member.guild.roles.find(x => x.name === "Buds");
@@ -47,7 +47,7 @@ bot.on('guildMemberAdd', async member => {
 
 // event listener: member remove
 bot.on('guildMemberRemove', async member => {
-  const botchat = bot.channels.find(x => x.name === "logs")
+  const botchat = bot.channels.get("762666208121061386")
     botchat.send(`${member} left.`)
 });
 
@@ -75,8 +75,9 @@ bot.on('message', async message => {
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let nick = sender.username;
-    let logchannel = message.guild.channels.find(x => x.name === "logs");
+    let logchannel = bot.channels.get("762666208121061386");
     if (bot.user.id === sender.id) {return};
+    let Staff = message.guild.roles.find(x => x.name === "Guards");
 
     // DM forward
 
@@ -91,8 +92,6 @@ bot.on('message', async message => {
 
         message.logchannel.send(DMembed)
   };*/
-
-  let Staff = message.guild.roles.find(x => x.name === "Guards");
 
 
     //
@@ -221,7 +220,7 @@ bot.on('message', async message => {
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         message.channel.startTyping(500)
-        let newchat = message.guild.channels.find(x => x.name === "announcements")
+        let newchat = message.guild.channels.get("772811482035519488")
         
         let m = await newchat.send('@everyone', {files: ["./storage/Emeeting.png"]})
         let m2 = await newchat.send(args)
