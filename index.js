@@ -25,6 +25,9 @@ bot.on('guildMemberAdd', async member => {
   const botchat = bot.channels.find(x => x.name === "logs")
   botchat.send(`${member} joined.`)
 
+  let bud = message.guild.roles.find(x => x.name === "Buds");
+  member.addRole(bud);
+
   member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
