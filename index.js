@@ -49,7 +49,22 @@ bot.on('guildMemberAdd', async member => {
 bot.on('guildMemberRemove', async member => {
   const botchat = bot.channels.find(x => x.name === "logs")
     botchat.send(`${member} left.`)
-}); 
+});
+
+
+//event listener: join/leave a voice channel
+bot.on('voiceStateUpdate', (oldMember, newMember) => {
+  let newUserChannel = newMember.voiceChannel
+  let oldUserChannel = oldMember.voiceChannel
+  let VC = newMember.guild.roles.find("name", "VC");
+  const clash = newMember.guild.channels.find("name", "clash-team");
+
+  if(oldUserChannel === undefined && newUserChannel !== undefined) { // User Joins a voice channel
+    newMember.addRole(VC).catch(console.error);
+  } else if(newUserChannel === undefined) { // User leaves a voice channel
+    newMember.removeRole(VC).catch(console.error);
+  }
+});
 
 
 // Event listener: Message Received ( This will run every time a message is received)
@@ -206,7 +221,7 @@ bot.on('message', async message => {
 
       if(sender.id === "186487324517859328" || message.member.roles.has(Staff.id)) {
         message.channel.startTyping(500)
-        let newchat = message.guild.channels.get("760418137606193192")
+        let newchat = message.guild.channels.find(x => x.name === "announcements")
         
         let m = await newchat.send('@everyone', {files: ["./storage/Emeeting.png"]})
         let m2 = await newchat.send(args)
