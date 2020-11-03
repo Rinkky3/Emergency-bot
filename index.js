@@ -56,8 +56,7 @@ bot.on('guildMemberRemove', async member => {
 bot.on('voiceStateUpdate', (oldMember, newMember) => {
   let newUserChannel = newMember.voiceChannel
   let oldUserChannel = oldMember.voiceChannel
-  let VC = newMember.guild.roles.find("name", "VC");
-  const clash = newMember.guild.channels.find("name", "clash-team");
+  let VC = newMember.guild.roles.get("772813475231039488");
 
   if(oldUserChannel === undefined && newUserChannel !== undefined) { // User Joins a voice channel
     newMember.addRole(VC).catch(console.error);
@@ -338,7 +337,7 @@ bot.on("messageDelete", (messageDelete) => {
   .addField("Message", messageDelete.content)
   .setFooter(`Message ID: ${messageDelete.id} | Author ID: ${messageDelete.author.id}`);
   
-  let logchan = messageDelete.guild.channels.find(x => x.name === "logs");
+  let logchan = messageDelete.guild.channels.get("762666208121061386");
   if (messageDelete.length >= 1024) {logchan.send("deleted message embed cannot be sent, for it exceeds 1024 characters.")}
    logchan.send(DeleteEmbed).catch(err => console.log(err));
 });
@@ -359,7 +358,7 @@ bot.on("messageUpdate", async (oldMessage, newMessage) => {
   .addField("New message:", newMessage.content)
   .setFooter(`Message ID: ${oldMessage.id} | Author ID: ${oldMessage.author.id}`);
 
-  let logchan = oldMessage.guild.channels.find(x => x.name === "logs");
+  let logchan = oldMessage.guild.channels.get("762666208121061386");
   if (oldMessage.length >= 1024) {logchan.send("Updated message embed cannot be sent, for it exceeds 1024 characters.")}
    logchan.send(editEmbed).catch(err => console.log(err));
 
