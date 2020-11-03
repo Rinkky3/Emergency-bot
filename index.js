@@ -37,13 +37,11 @@ bot.on('ready', async () => {
 
 
 // event listener: reaction
-bot.on("messageReactionAdd", async (reaction, user) => {
-  if(reaction.emoji.id == "agree" && reaction.message.id === message_id) 
-      {
-          bot.fetchMember(user) // fetch the user that reacted
-              .then((user) => 
-              {
-                  let Buds = (user.guild.roles.find(role => role.name === "Buds"));
+bot.on("messageReactionAdd", async (msgreaction, user) => {
+  if(msgreaction.emoji.id == "agree" && msgreaction.message.id === message_id) {
+          msgreaction.fetchMember(user) // fetch the user that reacted
+              .then((user) => {
+                  let Buds = msgreaction.guild.roles.find(role => role.name === "Buds");
                   user.addRole(Buds)
                   .then(() => {
                       console.log(`Added the Buds role to ${user.nickname}`);
@@ -52,16 +50,16 @@ bot.on("messageReactionAdd", async (reaction, user) => {
                       logchat.send(`Added the Buds role to ${user.nickname}`);
                   });
               });
-      }
-  if(reaction.emoji.id == "disagree" && reaction.message.id === message_id) {
+  }
+
+  if(msgreaction.emoji.id == "disagree" && msgreaction.message.id === message_id) {
     bot.fetchMember(user) // fetch the user that reacted
               .then((user) => {
                 user.kick("Disagreed to the rules.").then(() => {
                     console.log(`Kicked ${user.nickname}`);
                     const logchat = bot.channels.get("762666208121061386")
                     logchat.send(`Kicked ${user.nickname} \nReason: Disagreed to the rules.`);
-                }
-                );
+                });
               })
   }
 });
@@ -72,13 +70,14 @@ bot.on('guildMemberAdd', async member => {
   const botchat = bot.channels.get("762666208121061386")
   botchat.send(`${member} joined.`)
 
-  let inP = member.guild.roles.find(x => x.name === "in-progress");
-  member.addRole(inP);
+  let inP = member.guild.roles.get("772807965576134667");
+  let m = await member.addRole(inP);
 
+  let Unick = member.guild.members.get(member.nickname)
   member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
-          dm.send(`Welcome ${member.nickname} to the server, we hope you have a great stay! Lets settle things up for you. But first..
+        let m2 = await dm.send(`Welcome ${Unick} to the server, we hope you have a great stay! Lets settle things up for you. But first..
            \n\n#welcome-rules \n https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif`).catch(err => console.log(err))
         });
     
@@ -97,7 +96,7 @@ bot.on('guildMemberRemove', async member => {
 bot.on('voiceStateUpdate', async (oldMember, newMember) => {
   let newUserChannel = newMember.voiceChannel
   let oldUserChannel = oldMember.voiceChannel
-  let VC = newMember.guild.roles.find("name", "VC");
+  let VC = newMember.guild.roles.get("772813475231039488");
 
   if(oldUserChannel === undefined && newUserChannel !== undefined) { // User Joins a voice channel
     newMember.addRole(VC).catch(console.error);
