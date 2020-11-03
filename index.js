@@ -27,7 +27,7 @@ bot.on('ready', async () => {
     })
 
 
-    client.channels.get(channel_id).fetchMessage(message_id).then(m => {
+    bot.channels.get(channel_id).fetchMessage(message_id).then(m => {
       console.log("Cached reaction message.");
     }).catch(e => {
       console.error("Error loading message.");
@@ -40,26 +40,26 @@ bot.on('ready', async () => {
 bot.on("messageReactionAdd", async (reaction, user) => {
   if(reaction.emoji.id == "agree" && reaction.message.id === message_id) 
       {
-          guild.fetchMember(user) // fetch the user that reacted
-              .then((member) => 
+          bot.fetchMember(user) // fetch the user that reacted
+              .then((user) => 
               {
-                  let Buds = (member.guild.Buds.find(role => role.name === "Buds"));
-                  member.addRole(Buds)
+                  let Buds = (user.guild.roles.find(role => role.name === "Buds"));
+                  user.addRole(Buds)
                   .then(() => {
-                      console.log(`Added the Buds role to ${member.nickname}`);
+                      console.log(`Added the Buds role to ${user.nickname}`);
 
                       const logchat = bot.channels.get("762666208121061386")
-                      logchat.send(`Added the Buds role to ${member.nickname}`);
+                      logchat.send(`Added the Buds role to ${user.nickname}`);
                   });
               });
       }
   if(reaction.emoji.id == "disagree" && reaction.message.id === message_id) {
-    guild.fetchMember(user) // fetch the user that reacted
-              .then((member) => {
-                member.kick("Disagreed to the rules.").then(() => {
-                    console.log(`Kicked ${member.nickname}`);
+    bot.fetchMember(user) // fetch the user that reacted
+              .then((user) => {
+                user.kick("Disagreed to the rules.").then(() => {
+                    console.log(`Kicked ${user.nickname}`);
                     const logchat = bot.channels.get("762666208121061386")
-                    logchat.send(`Kicked ${member.nickname} \nReason: Disagreed to the rules.`);
+                    logchat.send(`Kicked ${user.nickname} \nReason: Disagreed to the rules.`);
                 }
                 );
               })
@@ -72,7 +72,7 @@ bot.on('guildMemberAdd', async member => {
   const botchat = bot.channels.get("762666208121061386")
   botchat.send(`${member} joined.`)
 
-  let inP= member.guild.roles.find(x => x.name === "in-progress");
+  let inP = member.guild.roles.find(x => x.name === "in-progress");
   member.addRole(inP);
 
   member.guild.members.get(member.id)
