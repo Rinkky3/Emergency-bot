@@ -26,12 +26,19 @@ bot.on('guildMemberAdd', async member => {
   const botchat = bot.channels.get("762666208121061386")
   botchat.send(`${member} joined.`)
 
-  let Unick = member.guild.members.get(member.id)
+  //let Unick = member.guild.members.get(member.id)
   member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
-        dm.send({text: `Welcome <@${Unick}> to the server, we hope you have a great stay! Lets settle things up for you. But first..
-           \n\n<#759070780000305183> https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif`}).catch(err => console.log(err))
+        dm.send({embed: {
+          color: 0x00e600,
+          title: "Welcome to the server!",
+          description: `we hope you have a great stay! Lets settle things up for you. But first.. check this out: <#759070780000305183>`,
+          timestamp: new Date(),
+          footer: {
+            icon_url: bot.avatarURL
+            }
+        }}).catch(err => console.log(err))
         });
   
   //let inP = member.guild.roles.get("772807965576134667");
