@@ -33,7 +33,7 @@ bot.on('guildMemberAdd', async member => {
         dm.send({embed: {
           color: 0x00e600,
           title: "Welcome to the server!",
-          description: `we hope you have a great stay! Lets settle things up for you. But first.. check this out: <#759070780000305183>`,
+          description: `we hope you have a great stay! Lets settle things up for you. But first.. check out the rules channel.`,
           timestamp: new Date(),
           footer: {
             icon_url: bot.avatarURL
