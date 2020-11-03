@@ -85,10 +85,9 @@ bot.on('guildMemberAdd', async member => {
 
 
 // event listener: member remove
-let Hrole = Discord.GuildMember.highestRole;
 bot.on('guildMemberRemove', async member => {
   const botchat = bot.channels.get("762666208121061386")
-    botchat.send(`${member} (${Hrole}) left.`)
+    botchat.send(`${member} left.`)
 });
 
 
