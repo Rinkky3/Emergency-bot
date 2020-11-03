@@ -13,7 +13,7 @@ const { start } = require('repl');
 bot.on('ready', async () => {
     console.log('Bot is running') // Runs when the bot is launched
     const botchat = bot.channels.get("762666208121061386")
-    botchat.send(`https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`).catch(err);
+    botchat.send(`https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`);
   
     bot.user.setActivity("Being Sus | prefix `" , {
       type: "PLAYING"
