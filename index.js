@@ -17,7 +17,6 @@ bot.on('ready', async () => {
     bot.user.setActivity("Being Sus | prefix `" , {
       type: "PLAYING"
     })
-
 });
 
 // event listener: new guild members
@@ -38,7 +37,7 @@ bot.on('guildMemberAdd', member => {
 
 // event listener: member remove
 bot.on('guildMemberRemove', async member => {
-  const botchat = bot.channels.get("762666208121061386")
+  const botchat = member.guild.channels.get("762666208121061386")
     botchat.send(`${member} left.`)
 });
 
