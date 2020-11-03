@@ -1,4 +1,4 @@
-﻿// Calling the package
+﻿﻿// Calling the package
 `use strict`;
 const Discord = require('discord.js');
 const bot = new Discord.Client({disableEveryone: false});
@@ -7,44 +7,43 @@ const moment = require('moment'); // the moment package. to make this work u nee
 const ms = require("ms"); // npm install ms -s
 const { start } = require('repl');
 
-
-
 // Listener Event: Bot Launched
 bot.on('ready', async () => {
     console.log('Bot is running') // Runs when the bot is launched
+    
     const botchat = bot.channels.get("762666208121061386")
-    botchat.send(`https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`);
-  
+    botchat.send(`https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
+    
     bot.user.setActivity("Being Sus | prefix `" , {
       type: "PLAYING"
     })
-});
 
+});
 
 // event listener: new guild members
 bot.on('guildMemberAdd', async member => {
   const botchat = bot.channels.get("762666208121061386")
   botchat.send(`${member} joined.`)
 
-  //let Unick = member.guild.members.get(member.id)
+  let bud = member.guild.roles.find(x => x.name === "Buds");
+  member.addRole(bud);
+
   member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
-        dm.send({embed: {
-          color: 0x00e600,
-          title: "Welcome to the server!",
-          description: `we hope you have a great stay! Lets settle things up for you. But first.. check out the rules channel.`,
-          timestamp: new Date(),
-          footer: {
-            icon_url: bot.avatarURL
-            }
-        }}).catch(err => console.log(err))
+          dm.send({embed: {
+            color: 0x00e600,
+            title: "Wake the fuck up samurai!",
+            description: `We have a city to burn.`,
+            timestamp: new Date(),
+            footer: {
+              icon_url: bot.avatarURL,
+              text: "taco, burrito, sombrero"
+              }
+          }}).catch(err => console.log(err))
         });
-  
-  //let inP = member.guild.roles.get("772807965576134667");
-  //member.addRole(inP);
+    
 });
-
 
 // event listener: member remove
 bot.on('guildMemberRemove', async member => {
@@ -57,7 +56,8 @@ bot.on('guildMemberRemove', async member => {
 bot.on('voiceStateUpdate', (oldMember, newMember) => {
   let newUserChannel = newMember.voiceChannel
   let oldUserChannel = oldMember.voiceChannel
-  let VC = newMember.guild.roles.get("772813475231039488");
+  let VC = newMember.guild.roles.find("name", "VC");
+  const clash = newMember.guild.channels.find("name", "clash-team");
 
   if(oldUserChannel === undefined && newUserChannel !== undefined) { // User Joins a voice channel
     newMember.addRole(VC).catch(console.error);
@@ -82,14 +82,12 @@ bot.on('message', async message => {
     // DM forward
 
     /*if (message.channel.type == "dm") {
-
       let DMembed = new Discord.RichEmbed()
         .setDescription("DM Message")
         .setColor(0xe0782b)
         .setThumbnail(sender.displayAvatarURL)
         .addField("Username", nick)
         .addField("Sent at:", message.createdAt)
-
         message.logchannel.send(DMembed)
   };*/
 
