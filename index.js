@@ -7,57 +7,97 @@ const moment = require('moment'); // the moment package. to make this work u nee
 const ms = require("ms"); // npm install ms -s
 const { start } = require('repl');
 
+
+
 // Listener Event: Bot Launched
+
+  // REACTION STUFF
+  let channel_id = "759070780000305183"; 
+  let message_id = "770002153824845844";
+  //REACTION STUFF
+
 bot.on('ready', async () => {
     console.log('Bot is running') // Runs when the bot is launched
     
     const botchat = bot.channels.get("762666208121061386")
     botchat.send(`https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
-    
+  
     bot.user.setActivity("Being Sus | prefix `" , {
       type: "PLAYING"
     })
 
+
+    client.channels.get(channel_id).fetchMessage(message_id).then(m => {
+      console.log("Cached reaction message.");
+    }).catch(e => {
+      console.error("Error loading message.");
+      console.error(e);
+    });
 });
+
+
+// event listener: reaction
+bot.on("messageReactionAdd", async (reaction, user) => {
+  if(reaction.emoji.id == "agree" && reaction.message.id === message_id) 
+      {
+          guild.fetchMember(user) // fetch the user that reacted
+              .then((member) => 
+              {
+                  let Buds = (member.guild.Buds.find(role => role.name === "Buds"));
+                  member.addRole(Buds)
+                  .then(() => {
+                      console.log(`Added the Buds role to ${member.nickname}`);
+
+                      const logchat = bot.channels.get("762666208121061386")
+                      logchat.send(`Added the Buds role to ${member.nickname}`);
+                  });
+              });
+      }
+  if(reaction.emoji.id == "disagree" && reaction.message.id === message_id) {
+    guild.fetchMember(user) // fetch the user that reacted
+              .then((member) => {
+                member.kick("Disagreed to the rules.").then(() => {
+                    console.log(`Kicked ${member.nickname}`);
+                    const logchat = bot.channels.get("762666208121061386")
+                    logchat.send(`Kicked ${member.nickname} \nReason: Disagreed to the rules.`);
+                }
+                );
+              })
+  }
+});
+
 
 // event listener: new guild members
 bot.on('guildMemberAdd', async member => {
   const botchat = bot.channels.get("762666208121061386")
   botchat.send(`${member} joined.`)
 
-  let bud = member.guild.roles.find(x => x.name === "Buds");
-  member.addRole(bud);
+  let inP= member.guild.roles.find(x => x.name === "in-progress");
+  member.addRole(inP);
 
   member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
-          dm.send({embed: {
-            color: 0x00e600,
-            title: "Wake the fuck up samurai!",
-            description: `We have a city to burn.`,
-            timestamp: new Date(),
-            footer: {
-              icon_url: bot.avatarURL,
-              text: "taco, burrito, sombrero"
-              }
-          }}).catch(err => console.log(err))
+          dm.send(`Welcome ${member.nickname} to the server, we hope you have a great stay! Lets settle things up for you. But first..
+           \n\n#welcome-rules \n https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif`).catch(err => console.log(err))
         });
     
 });
 
+
 // event listener: member remove
 bot.on('guildMemberRemove', async member => {
   const botchat = bot.channels.get("762666208121061386")
-    botchat.send(`${member} left.`)
+  let Hrole = member.highestRole;
+    botchat.send(`${member} (${Hrole}) left.`)
 });
 
 
 //event listener: join/leave a voice channel
-bot.on('voiceStateUpdate', (oldMember, newMember) => {
+bot.on('voiceStateUpdate', async (oldMember, newMember) => {
   let newUserChannel = newMember.voiceChannel
   let oldUserChannel = oldMember.voiceChannel
   let VC = newMember.guild.roles.find("name", "VC");
-  const clash = newMember.guild.channels.find("name", "clash-team");
 
   if(oldUserChannel === undefined && newUserChannel !== undefined) { // User Joins a voice channel
     newMember.addRole(VC).catch(console.error);
