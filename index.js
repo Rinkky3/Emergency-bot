@@ -10,59 +10,15 @@ const { start } = require('repl');
 
 
 // Listener Event: Bot Launched
-
-  // REACTION STUFF
-  let channel_id = "759070780000305183"; 
-  let message_id = "770002153824845844";
-  //REACTION STUFF
-
 bot.on('ready', async () => {
     console.log('Bot is running') // Runs when the bot is launched
-    
     const botchat = bot.channels.get("762666208121061386")
-    botchat.send(`https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`)
+    botchat.send(`https://cdn.discordapp.com/attachments/759758089691201536/760482542901002271/iu.png`).catch(err);
   
     bot.user.setActivity("Being Sus | prefix `" , {
       type: "PLAYING"
     })
-
-
-    /*bot.channels.get(channel_id).fetchMessage(message_id).then(m => {
-      console.log("Cached reaction message.");
-    }).catch(e => {
-      console.error("Error loading message.");
-      console.error(e);
-    });*/
 });
-
-
-// event listener: reaction
-/*bot.on("messageReactionAdd", async (msgreaction, user) => {
-  if(msgreaction.emoji.id == "agree" && msgreaction.message.id === message_id) {
-          msgreaction.fetchMember(user) // fetch the user that reacted
-              .then((user) => {
-                  let Buds = msgreaction.guild.roles.find(role => role.name === "Buds");
-                  user.addRole(Buds)
-                  .then(() => {
-                      console.log(`Added the Buds role to ${user.nickname}`);
-
-                      const logchat = bot.channels.get("762666208121061386")
-                      logchat.send(`Added the Buds role to ${user.nickname}`);
-                  });
-              });
-  }
-
-  if(msgreaction.emoji.id == "disagree" && msgreaction.message.id === message_id) {
-    bot.fetchMember(user) // fetch the user that reacted
-              .then((user) => {
-                user.kick("Disagreed to the rules.").then(() => {
-                    console.log(`Kicked ${user.nickname}`);
-                    const logchat = bot.channels.get("762666208121061386")
-                    logchat.send(`Kicked ${user.nickname} \nReason: Disagreed to the rules.`);
-                });
-              })
-  }
-});*/
 
 
 // event listener: new guild members
@@ -70,17 +26,16 @@ bot.on('guildMemberAdd', async member => {
   const botchat = bot.channels.get("762666208121061386")
   botchat.send(`${member} joined.`)
 
-  let inP = member.guild.roles.get("772807965576134667");
-  let m = await member.addRole(inP);
-
   let Unick = member.guild.members.get(member.id)
   member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
-        dm.send(`Welcome <@${Unick}> to the server, we hope you have a great stay! Lets settle things up for you. But first..
-           \n\n<#759070780000305183> https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif`).catch(err => console.log(err))
+        dm.send({text: `Welcome <@${Unick}> to the server, we hope you have a great stay! Lets settle things up for you. But first..
+           \n\n<#759070780000305183> https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif`}).catch(err => console.log(err))
         });
-    
+  
+  //let inP = member.guild.roles.get("772807965576134667");
+  //member.addRole(inP);
 });
 
 
@@ -92,7 +47,7 @@ bot.on('guildMemberRemove', async member => {
 
 
 //event listener: join/leave a voice channel
-bot.on('voiceStateUpdate', async (oldMember, newMember) => {
+bot.on('voiceStateUpdate', (oldMember, newMember) => {
   let newUserChannel = newMember.voiceChannel
   let oldUserChannel = oldMember.voiceChannel
   let VC = newMember.guild.roles.get("772813475231039488");
