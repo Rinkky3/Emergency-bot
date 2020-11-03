@@ -77,7 +77,7 @@ bot.on('guildMemberAdd', async member => {
   member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
-        let m2 = await dm.send(`Welcome ${Unick} to the server, we hope you have a great stay! Lets settle things up for you. But first..
+        dm.send(`Welcome ${Unick} to the server, we hope you have a great stay! Lets settle things up for you. But first..
            \n\n#welcome-rules \n https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif`).catch(err => console.log(err))
         });
     
@@ -85,9 +85,9 @@ bot.on('guildMemberAdd', async member => {
 
 
 // event listener: member remove
+let Hrole = Discord.GuildMember.highestRole;
 bot.on('guildMemberRemove', async member => {
   const botchat = bot.channels.get("762666208121061386")
-  let Hrole = member.highestRole;
     botchat.send(`${member} (${Hrole}) left.`)
 });
 
