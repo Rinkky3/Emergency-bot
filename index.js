@@ -21,12 +21,12 @@ bot.on('ready', async () => {
 });
 
 // event listener: new guild members
-bot.on('guildMemberAdd', async member => {
+bot.on('guildMemberAdd', member => {
   const botchat = member.guild.channels.get("762666208121061386")
   botchat.send(`${member} joined.`)
 
-  let bud = member.guild.roles.find(x => x.name === "Buds");
-  member.addRole(bud);
+  //let pbud = member.guild.roles.find(x => x.name === "in-progress");
+  //member.addRole(pbud);
 
   member.guild.members.get(member.id)
     .createDM()
