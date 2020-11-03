@@ -78,7 +78,7 @@ bot.on('guildMemberAdd', async member => {
     .createDM()
       .then(dm => {
         dm.send(`Welcome ${Unick} to the server, we hope you have a great stay! Lets settle things up for you. But first..
-           \n\n#welcome-rules \n https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif`).catch(err => console.log(err))
+           \n\n<#759070780000305183> https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif`).catch(err => console.log(err))
         });
     
 });
