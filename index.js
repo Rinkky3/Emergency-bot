@@ -27,17 +27,17 @@ bot.on('ready', async () => {
     })
 
 
-    bot.channels.get(channel_id).fetchMessage(message_id).then(m => {
+    /*bot.channels.get(channel_id).fetchMessage(message_id).then(m => {
       console.log("Cached reaction message.");
     }).catch(e => {
       console.error("Error loading message.");
       console.error(e);
-    });
+    });*/
 });
 
 
 // event listener: reaction
-bot.on("messageReactionAdd", async (msgreaction, user) => {
+/*bot.on("messageReactionAdd", async (msgreaction, user) => {
   if(msgreaction.emoji.id == "agree" && msgreaction.message.id === message_id) {
           msgreaction.fetchMember(user) // fetch the user that reacted
               .then((user) => {
@@ -62,7 +62,7 @@ bot.on("messageReactionAdd", async (msgreaction, user) => {
                 });
               })
   }
-});
+});*/
 
 
 // event listener: new guild members
@@ -73,11 +73,11 @@ bot.on('guildMemberAdd', async member => {
   let inP = member.guild.roles.get("772807965576134667");
   let m = await member.addRole(inP);
 
-  let Unick = member.guild.members.get(member.nickname)
+  let Unick = member.guild.members.get(member.id)
   member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
-        dm.send(`Welcome ${Unick} to the server, we hope you have a great stay! Lets settle things up for you. But first..
+        dm.send(`Welcome <@${Unick}> to the server, we hope you have a great stay! Lets settle things up for you. But first..
            \n\n<#759070780000305183> https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif`).catch(err => console.log(err))
         });
     
