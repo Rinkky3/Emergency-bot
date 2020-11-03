@@ -22,7 +22,7 @@ bot.on('ready', async () => {
 
 // event listener: new guild members
 bot.on('guildMemberAdd', async member => {
-  const botchat = bot.channels.get("762666208121061386")
+  const botchat = member.guild.channels.get("762666208121061386")
   botchat.send(`${member} joined.`)
 
   let bud = member.guild.roles.find(x => x.name === "Buds");
@@ -31,16 +31,7 @@ bot.on('guildMemberAdd', async member => {
   member.guild.members.get(member.id)
     .createDM()
       .then(dm => {
-          dm.send({embed: {
-            color: 0x00e600,
-            title: "Wake the fuck up samurai!",
-            description: `We have a city to burn.`,
-            timestamp: new Date(),
-            footer: {
-              icon_url: bot.avatarURL,
-              text: "taco, burrito, sombrero"
-              }
-          }}).catch(err => console.log(err))
+          dm.send("Welcome to our server, we hope you have a great stay! Lets settle things up for you, but first.. \n <@759070780000305183> https://cdn.discordapp.com/attachments/762666208121061386/773173344471220284/tenor.gif").catch(err => console.log(err))
         });
     
 });
@@ -74,7 +65,7 @@ bot.on('message', async message => {
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let nick = sender.username;
-    let logchannel = bot.channels.get("762666208121061386");
+    let logchannel = message.guild.channels.get("762666208121061386");
     if (bot.user.id === sender.id) {return};
     let Staff = message.guild.roles.find(x => x.name === "Guards");
 
